@@ -6,7 +6,7 @@
 2. go to backend `cd backend`
 3. Create virtualenv `python -m venv venv`
 4. Upgrade setup tools `pip install --upgrade pip setuptools wheel`
-5. Activate env and install libraries `pip install -r requirements/base.txt`
+5. Activate env and install libraries `pip install -r dependencies/requirements.txt`
 6. go to ./app and execute `python manage.py runserver`
 
 
