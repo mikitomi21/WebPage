@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
+<<<<<<< HEAD
 class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(unique=True)
@@ -23,3 +24,8 @@ class Post(models.Model):
 
     def __str__(self):
         return self.name
+=======
+class Item(models.Model):
+    name = models.CharField(max_length=200)
+    created = models.DateTimeField(auto_now_add=True)
+>>>>>>> 9e95069520c6701cfd946f12d94e0d3a7bce0b1b

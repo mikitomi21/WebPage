@@ -28,6 +28,10 @@ SECRET_KEY = 'django-insecure-duwyzg(uij@(kk5@td$-8bpia-kxiagh-0jbv=7z1_q@zw@5n!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9e95069520c6701cfd946f12d94e0d3a7bce0b1b
 
 # Application definition
 
@@ -39,8 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+<<<<<<< HEAD
     'rest_framework',
     'profiles',
+=======
+    'profiles',
+    'rest_framework',
+>>>>>>> 9e95069520c6701cfd946f12d94e0d3a7bce0b1b
     'api',
 ]
 
