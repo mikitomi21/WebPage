@@ -13,7 +13,7 @@ COPY ./backend /app/backend
 RUN adduser django
 RUN chown -R django /app
 
-COPY ./compose/django/gunicorn.sh /gunicorn.sh
+COPY ./gunicorn.sh /gunicorn.sh
 
 RUN chmod +x /gunicorn.sh
 

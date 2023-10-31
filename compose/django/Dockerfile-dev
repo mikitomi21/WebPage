@@ -15,6 +15,7 @@ RUN chown -R django /app
 
 COPY ./compose/django/dev.sh /dev.sh
 
+
 RUN chmod +x /dev.sh
 
 WORKDIR /app

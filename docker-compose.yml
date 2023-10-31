@@ -1,18 +1,15 @@
-version: "3"
+version: '3'
 
 services:
-
   django:
     build:
-      context: .
       dockerfile: ./compose/django/Dockerfile-dev
     ports:
-      - "8000:8000"
+      - '8000:8000'
     volumes:
       - ./backend:/app/backend/
       - ./static:/app/static
       - ./media:/app/media
-
     environment:
       - DB_HOST=db
       - DB_NAME=app
@@ -21,10 +18,18 @@ services:
     depends_on:
       - db
 
+  react:
+    build:
+      dockerfile: ./compose/react/Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend:/frontend
+
   db:
     image: postgres:16-alpine
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       - POSTGRES_DB=app
       - POSTGRES_USER=postgres
