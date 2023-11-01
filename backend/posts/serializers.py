@@ -5,6 +5,7 @@ from authentication.serializers import CustomUserSerializer
 
 class PostSerializer(serializers.ModelSerializer):
     author = CustomUserSerializer(read_only=True)
+    likes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Post
@@ -14,6 +15,7 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     author = CustomUserSerializer(read_only=True)
     post = PostSerializer(read_only=True)
+    likes = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Comment
