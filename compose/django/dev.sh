@@ -10,6 +10,8 @@ elif [ "$1" = "migrate" ]; then
     python backend/manage.py migrate
 elif [ "$1" = "createsuperuseradmin" ]; then
     python backend/manage.py createsuperuseradmin
+elif [ "$1" = "createdefaultdata" ]; then
+    python backend/manage.py createdefaultdata
 else
   python backend/manage.py wait_for_db
   python backend/manage.py migrate
