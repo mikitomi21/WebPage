@@ -9,7 +9,9 @@ class PostViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         author = self.request.user
-        serializer.save(author=author)
+        likes = self.request.likes
+        serializer.save(author=author, likes=likes)
+
 
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
@@ -18,4 +20,5 @@ class CommentViewSet(ModelViewSet):
     def perform_create(self, serializer):
         author = self.request.user
         post = self.request.post
-        serializer.save(author=author, post=post)
+        likes = self.request.likes
+        serializer.save(author=author, post=post, likes=likes)
