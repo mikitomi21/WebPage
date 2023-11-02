@@ -17,5 +17,5 @@ class CommentViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         author = self.request.user
-        post = self.request.post
+        post = serializer.validated_data.get('post')
         serializer.save(author=author, post=post)

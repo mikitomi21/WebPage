@@ -9,13 +9,11 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('author', 'title', 'text')
-        read_only_fields = ('author',)
 
 class CommentSerializer(serializers.ModelSerializer):
     author = CustomUserSerializer(read_only=True)
-    post = PostSerializer(read_only=True)
+    post = serializers.PrimaryKeyRelatedField(queryset=Post.objects.all())
 
     class Meta:
         model = Comment
         fields = ('author', 'post', 'text')
-        read_only_fields = ('author', 'post', )
