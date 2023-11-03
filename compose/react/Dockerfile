@@ -3,10 +3,8 @@ LABEL maintainer="MARCIN STENKA"
 
 WORKDIR /app
 
-COPY ./frontend/public/ /app/public
-COPY ./frontend/src/ /app/src
-COPY ./frontend/package.json /app/
+COPY ./frontend/ /app/
 ENV PATH /frontend/node_modules/.bin:$PATH
 EXPOSE 3000
 RUN npm install
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
