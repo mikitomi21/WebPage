@@ -1,0 +1,20 @@
+:root {
+	--main-dark: hsl(200, 33%, 20%);
+	--dark: hsl(200, 33%, 16%);
+	--main-gold: hsl(42, 73%, 48%);
+	--main-light: hsl(144, 48%, 94%);
+	--main-purple: hsl(340, 77%, 40%);
+}
+body {
+	background: var(--dark);
+	margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+}

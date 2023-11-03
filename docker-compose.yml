@@ -25,8 +25,9 @@ services:
       - '3000:3000'
     volumes:
       - ./frontend:/app/frontend
-    stdin_open: true
-    tty: true
+    environment:
+      - NODE_ENV=development
+
   db:
     image: postgres:16-alpine
     ports:
