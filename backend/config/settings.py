@@ -33,7 +33,8 @@ DEBUG = os.getenv('DEBUG') == 'True'
 
 MIGRATE = len(sys.argv) > 1 and sys.argv[1] == 'migrate'
 
-ALLOWED_HOSTS = ['localhost', '0.0.0.0', 'krzysztofpe.pl', 'sharedspace.mooo.com', '127.0.0.1']
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'krzysztofpe.pl', 'sharedspace.mooo.com',]
 
 
 # Application definition
