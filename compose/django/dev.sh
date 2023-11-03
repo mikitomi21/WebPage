@@ -12,6 +12,8 @@ elif [ "$1" = "createsuperuseradmin" ]; then
     python backend/manage.py createsuperuseradmin
 elif [ "$1" = "createdefaultdata" ]; then
     python backend/manage.py createdefaultdata
+elif [ "$1" = "test" ]; then
+    python authentication/manage.py test backend.authentication.tests.TestAuthentication
 else
   python backend/manage.py wait_for_db
   python backend/manage.py migrate

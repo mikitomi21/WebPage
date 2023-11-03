@@ -4,7 +4,7 @@ from .models import Post, Comment
 
 @admin.register(Post)
 class AdminPost(admin.ModelAdmin):
-    fields = ['author', 'title', 'text', 'created']
+    fields = ['author', 'title', 'text', 'created', 'updated']
     list_display = fields
     list_filter = ['author', 'title']
 
