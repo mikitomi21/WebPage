@@ -18,6 +18,8 @@ elif [ "$1" = "test" ]; then
     else
         python backend/manage.py test backend
     fi
+elif [ "$1" = "shell" ]; then
+    python backend/manage.py shell
 else
   python backend/manage.py wait_for_db
   python backend/manage.py migrate

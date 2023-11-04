@@ -159,7 +159,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'NON_FIELD_ERRORS_KEY': '_error',
 }
+NON_FIELD_ERRORS_KEY = REST_FRAMEWORK['NON_FIELD_ERRORS_KEY']
 
 # User Settings
 AUTH_USER_MODEL = 'authentication.CustomUser'
@@ -173,7 +175,8 @@ DJOSER = {
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
         'current_user': 'authentication.serializers.CustomUserSerializer',
-        'user_create': 'authentication.serializers.UserCreateSerializer'
+        'user_create': 'authentication.serializers.UserCreateSerializer',
+        'token_create': 'authentication.serializers.CustomTokenCreateSerializer',
     },
     'LOGIN_FIELD': 'email',
     'PERMISSIONS': {
