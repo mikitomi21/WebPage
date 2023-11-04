@@ -12,8 +12,7 @@ class PostViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         author = self.request.user
-        likes = self.request.likes
-        serializer.save(author=author, likes=likes)
+        serializer.save(author=author)
 
     @action(detail=True, methods=['POST'])
     def add_like(self, request, pk) -> Response:
