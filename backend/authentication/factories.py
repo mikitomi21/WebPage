@@ -18,7 +18,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     def set_email_as_password(self, create, extracted, **kwargs):
         if not self.password and create:
             self.set_password(self.email)
-        elif not self.password:
+        else:
             self.set_password(self.password)
 
     class Meta:
