@@ -16,7 +16,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     @factory.post_generation
     def set_email_as_password(self, create, extracted, **kwargs):
-        if not self.password and create:
+        if not self.password:
             self.set_password(self.email)
         else:
             self.set_password(self.password)
