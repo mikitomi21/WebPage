@@ -12,11 +12,11 @@ class TestUser(APITestCase):
         self.login_url = reverse('login')
 
     def test_login(self):
-        user = UserFactory(email='test@example.com')
+        user = UserFactory()
         user.set_password('123456789')
         user.save()
 
-        data = {'email': 'test@example.com', 'password': '123456789'}
+        data = {'email': 'user1@example.com', 'password': '123456789'}
         response = self.client.post(self.login_url, data=data)
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertIn('auth_token', response.data)

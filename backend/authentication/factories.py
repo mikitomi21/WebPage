@@ -7,12 +7,10 @@ fake = Faker("pl_PL")
 
 
 class UserFactory(factory.django.DjangoModelFactory):
-    first_name = factory.LazyFunction(fake.first_name)
-    last_name = factory.LazyFunction(fake.last_name)
-    username = factory.LazyAttribute(
-        lambda obj: f'{obj.first_name.lower()}.{obj.last_name.lower()}{random.randint(1, 100)}'
-    )
-    email = factory.LazyAttribute(lambda obj: f'{obj.first_name}.{obj.last_name}@example.com')
+    first_name = factory.Sequence(lambda n: f'user{n+1}')
+    last_name = factory.SelfAttribute('first_name')
+    username = factory.LazyAttribute(lambda obj: f'{obj.first_name}username')
+    email = factory.LazyAttribute(lambda obj: f'{obj.first_name}@example.com')
 
     @factory.post_generation
     def set_email_as_password(self, create, extracted, **kwargs):
