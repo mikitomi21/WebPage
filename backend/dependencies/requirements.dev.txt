@@ -1,2 +1,5 @@
 -r requirements.txt
 -r linters.txt
+
+Faker==19.12.1
+factory-boy==3.3.0
