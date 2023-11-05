@@ -23,11 +23,13 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from posts.viewsets import PostViewSet, CommentViewSet
+from authentication.viewsets import CustomUserViewSet
 
 router = DefaultRouter()
 
 router.register(r'posts', PostViewSet)
 router.register(r'comments', CommentViewSet)
+router.register(r'auth/users', CustomUserViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
