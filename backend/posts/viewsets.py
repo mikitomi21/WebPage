@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
@@ -16,12 +17,9 @@ class PostViewSet(ModelViewSet):
 
     @action(detail=True, methods=['POST'])
     def add_like(self, request, pk) -> Response:
-        try:
-            post = Post.objects.get(id=pk)
-        except Exception as e:
-            return Response({"error": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
-
+        post = get_object_or_404(Post, id=pk)
         user = request.user
+
         if not post.likes.filter(id=user.id).exists():
             post.add_like(user)
             return Response({"message": f"Post liked by {user}"}, status=status.HTTP_200_OK)
@@ -39,10 +37,7 @@ class CommentViewSet(ModelViewSet):
 
     @action(detail=True, methods=['POST'])
     def add_like(self, request, pk) -> Response:
-        try:
-            comment = Comment.objects.get(id=pk)
-        except Exception as e:
-            return Response({"error": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
+        comment = get_object_or_404(Comment, id=pk)
         user = request.user
 
         if not comment.likes.filter(id=user.id).exists():
