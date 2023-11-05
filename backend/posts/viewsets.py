@@ -16,9 +16,12 @@ class PostViewSet(ModelViewSet):
 
     @action(detail=True, methods=['POST'])
     def add_like(self, request, pk) -> Response:
-        post = Post.objects.get(id=pk)
-        user = request.user
+        try:
+            post = Post.objects.get(id=pk)
+        except Exception as e:
+            return Response({"error": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
 
+        user = request.user
         if not post.likes.filter(id=user.id).exists():
             post.add_like(user)
             return Response({"message": f"Post liked by {user}"}, status=status.HTTP_200_OK)
@@ -36,7 +39,10 @@ class CommentViewSet(ModelViewSet):
 
     @action(detail=True, methods=['POST'])
     def add_like(self, request, pk) -> Response:
-        comment = Comment.objects.get(id=pk)
+        try:
+            comment = Comment.objects.get(id=pk)
+        except Exception as e:
+            return Response({"error": f"{e}"}, status=status.HTTP_404_NOT_FOUND)
         user = request.user
 
         if not comment.likes.filter(id=user.id).exists():
