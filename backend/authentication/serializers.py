@@ -18,7 +18,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'email',
-            'avatar'
+            'avatar',
+            'friends'
         )
 
 

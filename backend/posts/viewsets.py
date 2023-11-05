@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-from .models import Post, Comment
+from .models import Post, Comment, CustomUser
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework.response import Response
 
@@ -34,6 +34,7 @@ class CommentViewSet(ModelViewSet):
         author = self.request.user
         post = serializer.validated_data.get('post')
         serializer.save(author=author, post=post)
+
 
     @action(detail=True, methods=['POST'])
     def add_like(self, request, pk) -> Response:
