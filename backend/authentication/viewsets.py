@@ -17,6 +17,8 @@ class CustomUserViewSet(ModelViewSet):
         user = request.user
         friend = get_object_or_404(CustomUser, id=pk)
 
+        if user == friend:
+            return Response({"error": f"{user} can't add yourself to friends"}, status=status.HTTP_400_BAD_REQUEST)
         if not user.friends.filter(id=friend.id).exists():
             user.add_friend(friend)
             friend.add_friend(user)
