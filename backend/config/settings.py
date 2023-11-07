@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'djoser',
     'common',
     'posts',
-    'authentication'
+    'authentication',
+    'messenger'
 ]
 
 MIDDLEWARE = [
