@@ -1,6 +1,7 @@
 from django.contrib import admin
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 from messenger.models import Message
 
 
@@ -23,3 +24,7 @@ class AdminMessage(admin.ModelAdmin):
     fields_display = fields
     fields_filter = ['author', 'receiver']
 >>>>>>> 6b14c50 (add message)
+=======
+
+# Register your models here.
+>>>>>>> 60d4514 (Add messenger app)
