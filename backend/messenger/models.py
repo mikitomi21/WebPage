@@ -1,9 +1,4 @@
 from django.db import models
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 6b14c50 (add message)
 from authentication.models import CustomUser
 
 
@@ -21,14 +16,3 @@ class Message(models.Model):
 
     def __str__(self):
         return f"{self.author}'s message to {self.receiver}"
-<<<<<<< HEAD
-=======
-
-# Create your models here.
->>>>>>> 60d4514 (Add messenger app)
-=======
->>>>>>> 6b14c50 (add message)
-=======
-
-# Create your models here.
->>>>>>> 60d4514 (Add messenger app)
