@@ -1,8 +1,8 @@
 from django.contrib import admin
-from messenger.models import Message
+from .models import Message, Room
 
 
-@admin.register(Message)
+@admin.register(Room)
 class AdminRoom(admin.ModelAdmin):
     fields = ['name', 'members']
     fields_display = fields

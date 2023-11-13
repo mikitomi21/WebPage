@@ -44,4 +44,4 @@ class CommentViewSet(ModelViewSet):
         if not comment.likes.filter(id=user.id).exists():
             comment.add_like(user)
             return Response({"message": f"Comment liked by {user}"}, status=status.HTTP_200_OK)
-        return Response({"error": f"Comment was liked by {user}"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": f"Comment has been liked liked by {user}"}, status=status.HTTP_400_BAD_REQUEST)

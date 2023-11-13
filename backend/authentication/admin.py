@@ -9,6 +9,8 @@ class AdminCustomUser(admin.ModelAdmin):
     list_filter = ['username', 'email']
 
     def show_friends(self, obj):
-        return ", ".join(obj.friends.all())
+        friends = list(obj.friends.all())
+        friends_emails = [user.email for user in friends]
+        return ", ".join(friends_emails) if len(friends_emails) else ""
 
     show_friends.short_description = 'Show Friends'

@@ -24,7 +24,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from authentication.viewsets import CustomUserViewSet
 from posts.viewsets import PostViewSet, CommentViewSet
-from messenger.viewsets import MessageViewSet
+from messenger.viewsets import MessageViewSet, RoomViewSet
 
 router = DefaultRouter()
 
@@ -32,6 +32,7 @@ router.register(r'auth/users', CustomUserViewSet)
 router.register(r'posts', PostViewSet)
 router.register(r'comments', CommentViewSet)
 router.register(r'message', MessageViewSet)
+router.register(r'rooms', RoomViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(

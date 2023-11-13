@@ -22,6 +22,17 @@ class RoomViewSet(ModelViewSet):
             return Response({"message": f"{user} has been added to the room {room}"}, status.HTTP_200_OK)
         return Response({"error": f"{user} is already a member of the room {room}"}, status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=['DELETE'])
+    def remove_member(self, request, pk):
+        room = self.get_object()
+        user = get_object_or_404(CustomUser, id=pk)
+
+        if user not in room.members.all():
+            return Response({"error": f"{user} is not a member of the room {room}"}, status.HTTP_400_BAD_REQUEST)
+        else:
+            room.members.remove(user)
+            return Response({"message": f"{user} has been deleted to the room {room}"}, status.HTTP_200_OK)
+
 
 class MessageViewSet(ModelViewSet):
     queryset = Message.objects.all()
@@ -34,6 +45,16 @@ class MessageViewSet(ModelViewSet):
 
     @action(detail=True, methods=['POST'])
     def send_message(self, request, pk) -> Response:
-        message = get_object_or_404(Message, id=pk)
+        room = get_object_or_404(Room, id=pk)
         author = request.user
+        text = self.request.data.get('text')
+
+        if not text:
+            return Response({"error": f"The message has no text inside"})
+
+        message = Message(author=author, text=text, room=room, liked=False)
+        message.save()
+
+        return Response({"message": f"The message has been sent"})
+
 
