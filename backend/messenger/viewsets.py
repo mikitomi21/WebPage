@@ -33,6 +33,24 @@ class RoomViewSet(ModelViewSet):
             room.members.remove(user)
             return Response({"message": f"{user} has been deleted to the room {room}"}, status.HTTP_200_OK)
 
+    @action(detail=True, methods=['PUT'])
+    def set_name(self, request, pk=None):
+        room = self.get_object()
+        if not room:
+            return Response({"error": "The room does not exist"})
+
+        name = self.request.data.get('name')
+        if not name:
+            return Response({"error": "The name is empty"})
+
+        old_name = room.get_name()
+        if name == old_name:
+            return Response({"error": "Names can not be the same. Please change the new name."})
+
+        room.set_name(name)
+        room.save()
+        return Response({"message": f"The name of the room has been changed.Old name: {old_name} -> new name: {name}"})
+
 
 class MessageViewSet(ModelViewSet):
     queryset = Message.objects.all()
