@@ -15,7 +15,7 @@ class RoomViewSet(ModelViewSet):
     @action(detail=True, methods=['POST'])
     def add_member(self, request, pk):
         room = self.get_object()
-        user = get_object_or_404(CustomUser, id=pk)
+        user = request.user
 
         if user not in room.members.all():
             room.members.add(user)
