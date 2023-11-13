@@ -25,7 +25,7 @@ class RoomViewSet(ModelViewSet):
     @action(detail=True, methods=['DELETE'])
     def remove_member(self, request, pk):
         room = self.get_object()
-        user = get_object_or_404(CustomUser, id=pk)
+        user = request.user
 
         if user not in room.members.all():
             return Response({"error": f"{user} is not a member of the room {room}"}, status.HTTP_400_BAD_REQUEST)
