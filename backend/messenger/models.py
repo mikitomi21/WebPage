@@ -14,6 +14,7 @@ class Room(models.Model):
     def get_name(self) -> str:
         return self.name
 
+
     def __str__(self):
         return self.name if self.name else f"Room:{self.id}"
 
@@ -23,6 +24,8 @@ class Message(models.Model):
     text = models.TextField(max_length=1000)
     room = models.ForeignKey(Room, models.CASCADE, related_name='room_messages')
     liked = models.BooleanField(blank=True)
+
+    # likes = models.ManyToManyField(CustomUser, models.CASCADE, related_name='messages')
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
