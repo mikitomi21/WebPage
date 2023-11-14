@@ -13,7 +13,6 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
-from django.db.models.fields import EmailField
 
 load_dotenv()  # take environment variables from .env.
 

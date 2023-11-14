@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Post, Comment
 
+
 @admin.register(Post)
 class AdminPost(admin.ModelAdmin):
     fields = ['author', 'title', 'text', 'created', 'updated']
@@ -11,6 +12,7 @@ class AdminPost(admin.ModelAdmin):
         return obj.likes.count()
 
     likes_count.short_description = 'Likes Count'
+
 
 @admin.register(Comment)
 class AdminComment(admin.ModelAdmin):

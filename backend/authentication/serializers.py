@@ -81,4 +81,3 @@ class CustomTokenCreateSerializer(serializers.Serializer):
         if self.user and self.user.is_active:
             return attrs
         self.fail("invalid_credentials")
-

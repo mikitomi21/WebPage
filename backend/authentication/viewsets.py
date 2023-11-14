@@ -26,4 +26,3 @@ class CustomUserViewSet(ModelViewSet):
 
         return Response({"error": f"Can't connect {user} and {friend}, because they are friends"},
                         status=status.HTTP_400_BAD_REQUEST)
-

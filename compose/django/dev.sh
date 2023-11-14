@@ -14,6 +14,8 @@ elif [ "$1" = "createdefaultdata" ]; then
     python backend/manage.py createdefaultdata
 elif [ "$1" = "cleardatabase" ]; then
     python backend/manage.py cleardatabase
+elif [ "$1" = "flake8" ]; then
+    python -m flake8 --config=backend/setup.cfg
 elif [ "$1" = "test" ]; then
     if [ -n "$2" ]; then
         python backend/manage.py test "$2"
