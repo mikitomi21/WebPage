@@ -25,4 +25,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Backend Test
-        run: docker-compose run --rm -e SECRET_KEY=${{ secrets.SECRET_KEY }} django test
+        run: docker-compose run --rm django test
