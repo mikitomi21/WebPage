@@ -2,6 +2,7 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from authentication.models import CustomUser
 
+
 class Command(BaseCommand):
     help = "Check if data exists. If local database is empty create default data"
 

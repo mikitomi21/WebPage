@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from authentication.models import CustomUser
 from posts.models import Post, Comment
 
+
 class Command(BaseCommand):
     help = "Delete of data from database"
 
