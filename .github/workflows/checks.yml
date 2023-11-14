@@ -18,7 +18,7 @@ jobs:
       - name: Set up environment
         run: echo SECRET_KEY="${{ secrets.SECRET_KEY }}" >> .env
       - name: Lint
-        run: docker compose run --rm -e SECRET_KEY=${{ secrets.SECRET_KEY }} django flake8
+        run: docker compose run --rm django flake8
   backend-test:
     needs: lint
     name: backend test
