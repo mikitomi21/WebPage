@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Lint
-        run: docker compose run --rm django sh -c "python3 -m flake8 --config=backend/setup.cfg"
+        run: docker compose run --rm django flake8
   backend-test:
     needs: lint
     name: backend test
@@ -25,4 +25,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Backend Test
-        run: docker-compose run --rm django test
+        run: docker compose run --rm django test
