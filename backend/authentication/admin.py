@@ -7,8 +7,9 @@ class AdminCustomUser(admin.ModelAdmin):
     fields = ['username', 'email', 'avatar', 'password', 'show_friends']
     list_display = ['username', 'email', 'show_friends']
     list_filter = ['username', 'email']
+    readonly_fields = ['show_friends']
 
     def show_friends(self, obj):
-        return ", ".join(obj.friends.all())
+        return ", ".join(friend.username for friend in obj.friends.all())
 
     show_friends.short_description = 'Show Friends'
