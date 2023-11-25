@@ -4,9 +4,9 @@ from .models import Post, Comment
 
 @admin.register(Post)
 class AdminPost(admin.ModelAdmin):
-    fields = ['author', 'title', 'text', 'created', 'updated']
     list_display = ['author', 'title', 'likes_count', 'created', 'updated']
     list_filter = ['author', 'title']
+    readonly_fields = ['likes_count']
 
     def likes_count(self, obj):
         return obj.likes.count()
@@ -16,9 +16,9 @@ class AdminPost(admin.ModelAdmin):
 
 @admin.register(Comment)
 class AdminComment(admin.ModelAdmin):
-    fields = ['author', 'post', 'text', 'created', 'updated']
     list_display = ['author', 'post', 'likes_count', 'created', 'updated']
     list_filter = ['author', 'post']
+    readonly_fields = ['likes_count']
 
     def likes_count(self, obj):
         return obj.likes.count()
