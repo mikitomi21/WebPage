@@ -26,7 +26,5 @@ elif [ "$1" = "shell" ]; then
     python backend/manage.py shell
 else
   python backend/manage.py wait_for_db
-  python backend/manage.py migrate
-  python backend/manage.py check_if_data_exists
   python backend/manage.py runserver 0.0.0.0:8000
 fi

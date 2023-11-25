@@ -11,6 +11,8 @@ ShareSpace is your new go-to social media platform, designed for the ultimate sh
 ### Backend
 
 - [Installation](docs/backend/installation.md)
+- [Snippets](docs/backend/snippets.md)
+- [Admin Panel](docs/backend/admin.md)
 
 ### Frontend
 - next.js v14
