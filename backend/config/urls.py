@@ -29,7 +29,7 @@ router = DefaultRouter()
 
 router.register(r'posts', PostViewSet)
 router.register(r'comments', CommentViewSet)
-router.register(r'auth/users', CustomUserViewSet)
+router.register(r'users', CustomUserViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
