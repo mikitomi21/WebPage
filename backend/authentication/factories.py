@@ -1,6 +1,10 @@
 import factory
 from django.contrib.auth import get_user_model
+import requests
+from django.core.files.base import ContentFile
 from faker import Faker
+
+from authentication.utils import get_random_gravatar
 
 fake = Faker("pl_PL")
 
