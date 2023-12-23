@@ -5,7 +5,7 @@ from djoser.serializers import UserCreateMixin
 from rest_framework import serializers
 from rest_framework.settings import api_settings
 from django.core import exceptions as django_exceptions
-from authentication.models import CustomUser
+from users.models import CustomUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):

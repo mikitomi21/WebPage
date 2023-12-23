@@ -31,31 +31,40 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'
-
+TEST = len(sys.argv) > 1 and sys.argv[1] == 'test' or 'pytest' in sys.modules
+SHELL = "shell" in sys.argv
 MIGRATE = len(sys.argv) > 1 and sys.argv[1] == 'migrate'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'krzysztofpe.pl', 'sharedspace.mooo.com',]
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+THIRD_PARTY_APPS = [
     'corsheaders',
     'drf_yasg',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'djoser',
+]
+
+PROJECT_APPS = [
     'common',
     'posts',
-    'authentication',
     'integrations'
+    'users'
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -138,11 +147,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+<<<<<<< HEAD
 
 if DEBUG:
     STATIC_URL = 'static/'
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'media')
+=======
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+>>>>>>> origin
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -165,7 +181,7 @@ REST_FRAMEWORK = {
 NON_FIELD_ERRORS_KEY = REST_FRAMEWORK['NON_FIELD_ERRORS_KEY']
 
 # User Settings
-AUTH_USER_MODEL = 'authentication.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
 SUPERUSER_USERNAME = 'admin'
 SUPERUSER_EMAIL = 'admin@example.com'
 SUPERUSER_PASSWORD = 'password'
@@ -175,9 +191,9 @@ SUPERUSER_PASSWORD = 'password'
 DJOSER = {
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-        'current_user': 'authentication.serializers.CustomUserSerializer',
-        'user_create': 'authentication.serializers.UserCreateSerializer',
-        'token_create': 'authentication.serializers.CustomTokenCreateSerializer',
+        'current_user': 'users.serializers.CustomUserSerializer',
+        'user_create': 'users.serializers.UserCreateSerializer',
+        'token_create': 'users.serializers.CustomTokenCreateSerializer',
     },
     'LOGIN_FIELD': 'email',
     'PERMISSIONS': {

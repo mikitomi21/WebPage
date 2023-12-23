@@ -1,8 +1,8 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from authentication.constants import Messages
-from authentication.factories import UserFactory
+from users.constants import Messages
+from users.factories import UserFactory
 from config import settings
 
 

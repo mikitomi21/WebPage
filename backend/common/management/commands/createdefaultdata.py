@@ -2,7 +2,7 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from faker import Faker
 from posts.models import Post, Comment
-from authentication.models import CustomUser
+from users.models import CustomUser
 import random
 
 NUMBER_OF_USERS = 20
