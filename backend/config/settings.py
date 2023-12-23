@@ -58,7 +58,7 @@ THIRD_PARTY_APPS = [
 PROJECT_APPS = [
     'common',
     'posts',
-    'authentication'
+    'users'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -170,7 +170,7 @@ REST_FRAMEWORK = {
 NON_FIELD_ERRORS_KEY = REST_FRAMEWORK['NON_FIELD_ERRORS_KEY']
 
 # User Settings
-AUTH_USER_MODEL = 'authentication.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
 SUPERUSER_USERNAME = 'admin'
 SUPERUSER_EMAIL = 'admin@example.com'
 SUPERUSER_PASSWORD = 'password'
@@ -180,9 +180,9 @@ SUPERUSER_PASSWORD = 'password'
 DJOSER = {
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-        'current_user': 'authentication.serializers.CustomUserSerializer',
-        'user_create': 'authentication.serializers.UserCreateSerializer',
-        'token_create': 'authentication.serializers.CustomTokenCreateSerializer',
+        'current_user': 'users.serializers.CustomUserSerializer',
+        'user_create': 'users.serializers.UserCreateSerializer',
+        'token_create': 'users.serializers.CustomTokenCreateSerializer',
     },
     'LOGIN_FIELD': 'email',
     'PERMISSIONS': {
