@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.files.base import ContentFile
 from django.db import models
 
-from authentication.utils import get_random_gravatar
+from integrations.gravatar.gravatar import get_random_gravatar
 
 
 class CustomUser(AbstractUser):

@@ -13,6 +13,8 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
+from integrations.gravatar.enums import GravatarType
+
 
 load_dotenv()  # take environment variables from .env.
 
@@ -51,7 +53,8 @@ INSTALLED_APPS = [
     'djoser',
     'common',
     'posts',
-    'authentication'
+    'authentication',
+    'integrations'
 ]
 
 MIDDLEWARE = [
@@ -182,3 +185,9 @@ DJOSER = {
     }
 }
 CORS_ALLOW_ALL_ORIGINS = True
+
+# --- Integrations ---
+
+# Gravatar
+
+DEFAULT_GRAVATAR_TYPE = GravatarType.RETRO
