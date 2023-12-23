@@ -29,30 +29,39 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'
-
+TEST = len(sys.argv) > 1 and sys.argv[1] == 'test' or 'pytest' in sys.modules
+SHELL = "shell" in sys.argv
 MIGRATE = len(sys.argv) > 1 and sys.argv[1] == 'migrate'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'krzysztofpe.pl', 'sharedspace.mooo.com',]
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+THIRD_PARTY_APPS = [
     'corsheaders',
     'drf_yasg',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'djoser',
+]
+
+PROJECT_APPS = [
     'common',
     'posts',
     'authentication'
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,11 +144,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-
-if DEBUG:
-    STATIC_URL = 'static/'
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
