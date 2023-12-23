@@ -60,7 +60,7 @@ THIRD_PARTY_APPS = [
 PROJECT_APPS = [
     'common',
     'posts',
-    'integrations'
+    'integrations',
     'users'
 ]
 
@@ -147,18 +147,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-<<<<<<< HEAD
-
-if DEBUG:
-    STATIC_URL = 'static/'
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'media')
-=======
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
->>>>>>> origin
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
