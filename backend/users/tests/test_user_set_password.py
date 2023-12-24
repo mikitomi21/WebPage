@@ -81,4 +81,4 @@ class SetPasswordViewTest(APITestCase):
 
         self.assertEqual(len(actual_error_messages), len(expected_error_messages))
         self.user.refresh_from_db()
-        self.assertFalse(self.user.check_password(data["current_password"]))
+        self.assertFalse(self.user.check_password(data["new_password"]))

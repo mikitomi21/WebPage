@@ -1,7 +1,6 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-from rest_framework.authtoken.models import Token
 from users.factories import UserFactory
 from users.models import CustomUser
 from common.test_utils import login_user
@@ -12,9 +11,6 @@ class TestCustomUserAPI(APITestCase):
     def setUp(self):
         self.user1 = UserFactory()
         self.user2 = UserFactory()
-
-    def authenticate(self, user):
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {Token.objects.get(user=user).key}')
 
     def test_list_users(self):
         login_user(self.client, self.user1)

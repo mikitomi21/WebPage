@@ -1,7 +1,43 @@
 from django.urls import reverse
-from rest_framework import status
-from rest_framework.test import APITestCase
 from users.factories import UserFactory
+from django.conf import settings
+from django.contrib.auth import user_logged_out
+from django.test.utils import override_settings
+from rest_framework import status
+from rest_framework.reverse import reverse
+from rest_framework.test import APITestCase
+from common.test_utils import login_user
+
+
+class TokenDestroyViewTest(APITestCase):
+    def setUp(self):
+        self.signal_sent = False
+        self.base_url = reverse("logout")
+        self.user = UserFactory()
+
+    def signal_receiver(self, *args, **kwargs):
+        self.signal_sent = True
+
+    def test_post_should_logout_logged_in_user(self):
+        user_logged_out.connect(self.signal_receiver)
+
+        login_user(self.client, self.user)
+        response = self.client.post(self.base_url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.data, None)
+        self.assertTrue(self.signal_sent)
+
+    def test_post_should_deny_logging_out_when_user_not_logged_in(self):
+        response = self.client.post(self.base_url)
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_options(self):
+        login_user(self.client, self.user)
+        response = self.client.options(self.base_url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class TestUserAuthToken(APITestCase):
