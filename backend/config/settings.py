@@ -113,12 +113,16 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
+MINIMUM_PASSWORD_LENGTH = 10
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': MINIMUM_PASSWORD_LENGTH,
+        },
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -184,9 +188,12 @@ DJOSER = {
         'user_create': 'users.serializers.UserCreateSerializer',
         'token_create': 'users.serializers.CustomTokenCreateSerializer',
     },
+    'HIDE_USERS': False,
     'LOGIN_FIELD': 'email',
     'PERMISSIONS': {
 
     }
 }
+
+# Cors
 CORS_ALLOW_ALL_ORIGINS = True
