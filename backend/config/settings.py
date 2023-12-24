@@ -205,5 +205,15 @@ CORS_ALLOW_ALL_ORIGINS = True
 # --- Integrations ---
 
 # Gravatar
-
 DEFAULT_GRAVATAR_TYPE = GravatarType.RETRO
+
+# SWAGGER
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {'apiKey': {'type': 'apiKey', 'name': 'Token', 'in': 'header'}},
+    'SHOW_REQUEST_HEADERS': True,
+    'JSON_EDITOR': True,
+    'LOGIN_URL': 'admin:login',
+    'LOGOUT_URL': 'logout',
+    'OPERATIONS_SORTER': 'alpha',
+}
+
