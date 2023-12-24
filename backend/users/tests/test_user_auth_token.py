@@ -1,10 +1,7 @@
 from django.urls import reverse
 from users.factories import UserFactory
-from django.conf import settings
 from django.contrib.auth import user_logged_out
-from django.test.utils import override_settings
 from rest_framework import status
-from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 from common.test_utils import login_user
 
