@@ -189,6 +189,7 @@ DJOSER = {
         'token_create': 'users.serializers.CustomTokenCreateSerializer',
     },
     'HIDE_USERS': False,
+    "CREATE_SESSION_ON_LOGIN": True,
     'LOGIN_FIELD': 'email',
     'PERMISSIONS': {
 
