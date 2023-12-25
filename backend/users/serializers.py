@@ -8,7 +8,7 @@ from django.core import exceptions as django_exceptions
 from users.models import CustomUser
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
@@ -20,6 +20,17 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'email',
             'avatar',
             'friends'
+        )
+
+
+class UserSerializer(UserDetailSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = (
+            'id',
+            'username',
+            'avatar',
         )
 
 
