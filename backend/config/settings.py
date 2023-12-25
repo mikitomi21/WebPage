@@ -216,4 +216,3 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': 'logout',
     'OPERATIONS_SORTER': 'alpha',
 }
-
