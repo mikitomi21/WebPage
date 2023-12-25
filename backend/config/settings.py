@@ -53,6 +53,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'djoser',
+    'silk',
 ]
 
 PROJECT_APPS = [
@@ -64,6 +65,7 @@ PROJECT_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
