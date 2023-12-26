@@ -186,7 +186,7 @@ SUPERUSER_PASSWORD = 'password'
 DJOSER = {
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-        'current_user': 'users.serializers.CustomUserSerializer',
+        'current_user': 'users.serializers.UserDetailSerializer',
         'user_create': 'users.serializers.UserCreateSerializer',
         'token_create': 'users.serializers.CustomTokenCreateSerializer',
     },
