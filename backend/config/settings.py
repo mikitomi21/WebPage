@@ -13,6 +13,8 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
+from integrations.gravatar.enums import GravatarType
+
 
 load_dotenv()  # take environment variables from .env.
 
@@ -59,6 +61,7 @@ THIRD_PARTY_APPS = [
 PROJECT_APPS = [
     'common',
     'posts',
+    'integrations',
     'users'
 ]
 
@@ -200,6 +203,11 @@ DJOSER = {
 
 # Cors
 CORS_ALLOW_ALL_ORIGINS = True
+
+# --- Integrations ---
+
+# Gravatar
+DEFAULT_GRAVATAR_TYPE = GravatarType.RETRO
 
 # SWAGGER
 SWAGGER_SETTINGS = {
