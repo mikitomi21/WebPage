@@ -4,10 +4,12 @@
 	--main-gold: hsl(42, 73%, 48%);
 	--main-light: hsl(144, 48%, 94%);
 	--main-purple: hsl(340, 77%, 40%);
+	--max-width: 1080px;
 }
 body {
 	background: var(--dark);
 	margin: 0;
+	color: var(--main-light);
 }
 h1,
 h2,
@@ -18,7 +20,7 @@ h6,
 p {
 	margin: 0;
 }
-.loader{
+.loader {
 	display: flex;
 	justify-content: center;
 	align-items: center;

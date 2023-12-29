@@ -1,12 +1,11 @@
 .posts {
-	max-width: 1080px;
+	max-width: var(--max-width);
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
 	gap: 20px;
 }
 .post {
-	color: var(--main-light);
 	background: var(--main-dark);
 	padding: 30px;
 	border-radius: 15px;

@@ -13,7 +13,7 @@ type Post = {
 };
 
 export default function Home() {
-	const [posts, setPosts] = useState<Post[]| undefined>(undefined);
+	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
 	const [isToken, setIsToken] = useState(false);
 	const [arePosts, setArePosts] = useState(false);
 	useEffect(() => {
@@ -59,6 +59,7 @@ export default function Home() {
 	if (!isToken) return <div style={{ color: 'white' }}>BAD TOKEN</div>;
 	return (
 		<>
+			123nnhbhhbhbhbh hhh
 			<div className={styles.posts}>
 				{posts.map((post, index) => {
 					return (
