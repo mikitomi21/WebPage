@@ -18,9 +18,9 @@ services:
     depends_on:
       - db
 
-  react:
+  next:
     build:
-      dockerfile: ./compose/react/Dockerfile
+      dockerfile: ./compose/next/Dockerfile
     ports:
       - '3000:3000'
     volumes:
