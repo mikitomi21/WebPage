@@ -68,8 +68,6 @@ export default function Home() {
 								{post.author.first_name} {post.author.last_name}
 							</h3>
 						</div>
-						<h2 className={styles.post_title}>"{post.title}"</h2>
-						<p className={styles.post_text}>{post.text}</p>
 					</div>
 				);
 			})}
