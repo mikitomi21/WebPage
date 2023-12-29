@@ -59,8 +59,6 @@ export default function Home() {
 	if (!isToken) return <div style={{ color: 'white' }}>BAD TOKEN</div>;
 	return (
 		<>
-			123nnhbhhbhbhbh hhh
-			<div className={styles.posts}>
 				{posts.map((post, index) => {
 					return (
 						<div className={styles.post} key={index}>

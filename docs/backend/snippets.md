@@ -19,3 +19,11 @@ Run tests
 ```
 docker compose run --rm django test
 ```
+Run flake8
+```
+docker compose run --rm django flake8
+```
+Open shell
+```
+docker compose run --rm django shell
+```

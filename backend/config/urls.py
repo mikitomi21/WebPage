@@ -23,13 +23,13 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from posts.viewsets import PostViewSet, CommentViewSet
-from users.viewsets import CustomUserViewSet
+from users.viewsets import UserViewSet
 
 router = DefaultRouter()
 
 router.register(r'posts', PostViewSet)
 router.register(r'comments', CommentViewSet)
-router.register(r'users', CustomUserViewSet)
+router.register(r'users', UserViewSet)
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -55,7 +55,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/auth/', include('djoser.urls.authtoken')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]

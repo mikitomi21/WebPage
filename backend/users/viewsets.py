@@ -4,12 +4,12 @@ from rest_framework.decorators import action
 from .models import CustomUser
 from rest_framework.response import Response
 from djoser.views import UserViewSet as DjoserUserViewSet
-from .serializers import CustomUserSerializer
+from .serializers import UserDetailSerializer
 
 
-class CustomUserViewSet(DjoserUserViewSet):
+class UserViewSet(DjoserUserViewSet):
     queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = UserDetailSerializer
 
     @action(detail=True, methods=['POST'])
     def add_friend(self, request, id):

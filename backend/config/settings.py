@@ -13,6 +13,8 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
+from integrations.gravatar.enums import GravatarType
+
 
 load_dotenv()  # take environment variables from .env.
 
@@ -53,17 +55,20 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'djoser',
+    'silk',
 ]
 
 PROJECT_APPS = [
     'common',
     'posts',
+    'integrations',
     'users'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -150,8 +155,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR.parent, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -184,7 +189,7 @@ SUPERUSER_PASSWORD = 'password'
 DJOSER = {
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-        'current_user': 'users.serializers.CustomUserSerializer',
+        'current_user': 'users.serializers.UserDetailSerializer',
         'user_create': 'users.serializers.UserCreateSerializer',
         'token_create': 'users.serializers.CustomTokenCreateSerializer',
     },
@@ -198,6 +203,12 @@ DJOSER = {
 
 # Cors
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+# --- Integrations ---
+
+# Gravatar
+DEFAULT_GRAVATAR_TYPE = GravatarType.RETRO
 
 # SWAGGER
 SWAGGER_SETTINGS = {

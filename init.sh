@@ -20,3 +20,5 @@ echo "Creating default data..."
 docker compose run --rm django createdefaultdata
 echo "Creating admin user..."
 docker compose run --rm django createsuperuseradmin
+echo "Collecting staticfiles..."
+docker compose run --rm django collectstatic
