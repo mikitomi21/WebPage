@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - 'README.md'
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  lint:
+    name: flake8
+    runs-on: ubuntu-20.04
+    env:
+      SECRET_KEY: q32r&pkw(y-l^03w7lxs@2#!+jcc*w9yu1cd3x7pmvx75f@jl@
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Lint
+        run: docker compose run -e SECRET_KEY=$SECRET_KEY --rm django flake8
+  backend-test:
+    needs: lint
+    name: backend test
+    runs-on: ubuntu-20.04
+    env:
+      SECRET_KEY: q32r&pkw(y-l^03w7lxs@2#!+jcc*w9yu1cd3x7pmvx75f@jl@
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Backend Test
+        run: docker compose run -e SECRET_KEY=$SECRET_KEY --rm django test

@@ -13,7 +13,8 @@ import os
 import sys
 from pathlib import Path
 from dotenv import load_dotenv
-from django.db.models.fields import EmailField
+from integrations.gravatar.enums import GravatarType
+
 
 load_dotenv()  # take environment variables from .env.
 
@@ -30,32 +31,44 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'
-
+TEST = len(sys.argv) > 1 and sys.argv[1] == 'test' or 'pytest' in sys.modules
+SHELL = "shell" in sys.argv
 MIGRATE = len(sys.argv) > 1 and sys.argv[1] == 'migrate'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'krzysztofpe.pl', 'sharedspace.mooo.com',]
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+THIRD_PARTY_APPS = [
     'corsheaders',
     'drf_yasg',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'djoser',
-    'common',
-    'posts',
-    'authentication'
+    'silk',
 ]
 
+PROJECT_APPS = [
+    'common',
+    'posts',
+    'integrations',
+    'users'
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
+
 MIDDLEWARE = [
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -105,12 +118,16 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
+MINIMUM_PASSWORD_LENGTH = 10
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': MINIMUM_PASSWORD_LENGTH,
+        },
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -136,11 +153,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-
-if DEBUG:
-    STATIC_URL = 'static/'
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR.parent, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR.parent, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -163,7 +179,7 @@ REST_FRAMEWORK = {
 NON_FIELD_ERRORS_KEY = REST_FRAMEWORK['NON_FIELD_ERRORS_KEY']
 
 # User Settings
-AUTH_USER_MODEL = 'authentication.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
 SUPERUSER_USERNAME = 'admin'
 SUPERUSER_EMAIL = 'admin@example.com'
 SUPERUSER_PASSWORD = 'password'
@@ -173,13 +189,33 @@ SUPERUSER_PASSWORD = 'password'
 DJOSER = {
     'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
-        'current_user': 'authentication.serializers.CustomUserSerializer',
-        'user_create': 'authentication.serializers.UserCreateSerializer',
-        'token_create': 'authentication.serializers.CustomTokenCreateSerializer',
+        'current_user': 'users.serializers.UserDetailSerializer',
+        'user_create': 'users.serializers.UserCreateSerializer',
+        'token_create': 'users.serializers.CustomTokenCreateSerializer',
     },
+    'HIDE_USERS': False,
+    "CREATE_SESSION_ON_LOGIN": True,
     'LOGIN_FIELD': 'email',
     'PERMISSIONS': {
 
     }
 }
+
+# Cors
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+# --- Integrations ---
+
+# Gravatar
+DEFAULT_GRAVATAR_TYPE = GravatarType.RETRO
+
+# SWAGGER
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {'apiKey': {'type': 'apiKey', 'name': 'Token', 'in': 'header'}},
+    'SHOW_REQUEST_HEADERS': True,
+    'JSON_EDITOR': True,
+    'LOGIN_URL': 'admin:login',
+    'LOGOUT_URL': 'logout',
+    'OPERATIONS_SORTER': 'alpha',
+}

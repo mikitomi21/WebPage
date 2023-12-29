@@ -1,21 +1,20 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.viewsets import ModelViewSet
 from .models import CustomUser
 from rest_framework.response import Response
+from djoser.views import UserViewSet as DjoserUserViewSet
+from .serializers import UserDetailSerializer
 
-from .serializers import CustomUserSerializer
 
-
-class CustomUserViewSet(ModelViewSet):
+class UserViewSet(DjoserUserViewSet):
     queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
+    serializer_class = UserDetailSerializer
 
     @action(detail=True, methods=['POST'])
-    def add_friend(self, request, pk):
+    def add_friend(self, request, id):
         user = request.user
-        friend = get_object_or_404(CustomUser, id=pk)
+        friend = get_object_or_404(CustomUser, id=id)
 
         if user == friend:
             return Response({"error": f"{user} can't add yourself to friends"}, status=status.HTTP_400_BAD_REQUEST)
@@ -26,4 +25,3 @@ class CustomUserViewSet(ModelViewSet):
 
         return Response({"error": f"Can't connect {user} and {friend}, because they are friends"},
                         status=status.HTTP_400_BAD_REQUEST)
-

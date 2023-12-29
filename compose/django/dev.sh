@@ -12,6 +12,12 @@ elif [ "$1" = "createsuperuseradmin" ]; then
     python backend/manage.py createsuperuseradmin
 elif [ "$1" = "createdefaultdata" ]; then
     python backend/manage.py createdefaultdata
+elif [ "$1" = "cleardatabase" ]; then
+    python backend/manage.py cleardatabase
+elif [ "$1" = "flake8" ]; then
+    python -m flake8 --config=backend/setup.cfg
+elif [ "$1" = "collectstatic" ]; then
+    python backend/manage.py collectstatic
 elif [ "$1" = "test" ]; then
     if [ -n "$2" ]; then
         python backend/manage.py test "$2"
@@ -22,6 +28,5 @@ elif [ "$1" = "shell" ]; then
     python backend/manage.py shell
 else
   python backend/manage.py wait_for_db
-  python backend/manage.py migrate
   python backend/manage.py runserver 0.0.0.0:8000
 fi

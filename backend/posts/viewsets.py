@@ -1,15 +1,27 @@
+from django.db.models import Count, Prefetch
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-from .models import Post, Comment, CustomUser
+from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework.response import Response
 
 
 class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.select_related('author').prefetch_related('likes').all()
     serializer_class = PostSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.annotate(likes_count=Count('likes'))
+        prefetch_comments = Prefetch(
+            'comments',
+            queryset=Comment.objects.select_related('author')
+            .prefetch_related('likes')
+        )
+        queryset = queryset.prefetch_related(prefetch_comments)
+        return queryset
 
     def perform_create(self, serializer):
         author = self.request.user
@@ -34,7 +46,6 @@ class CommentViewSet(ModelViewSet):
         author = self.request.user
         post = serializer.validated_data.get('post')
         serializer.save(author=author, post=post)
-
 
     @action(detail=True, methods=['POST'])
     def add_like(self, request, pk) -> Response:

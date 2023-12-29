@@ -5,10 +5,10 @@ from djoser.serializers import UserCreateMixin
 from rest_framework import serializers
 from rest_framework.settings import api_settings
 from django.core import exceptions as django_exceptions
-from authentication.models import CustomUser
+from users.models import CustomUser
 
 
-class CustomUserSerializer(serializers.ModelSerializer):
+class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
@@ -20,6 +20,17 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'email',
             'avatar',
             'friends'
+        )
+
+
+class UserSerializer(UserDetailSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = (
+            'id',
+            'username',
+            'avatar',
         )
 
 
@@ -81,4 +92,3 @@ class CustomTokenCreateSerializer(serializers.Serializer):
         if self.user and self.user.is_active:
             return attrs
         self.fail("invalid_credentials")
-
