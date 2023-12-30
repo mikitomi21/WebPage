@@ -131,3 +131,16 @@
 		}
 	}
 }
+
+.sign_up {
+	display: flex;
+	gap: 10px;
+	a {
+		color: var(--main-light);
+		transition: color 0.3s;
+		text-decoration: none;
+		&:hover {
+			color: var(--main-gold);
+		}
+	}
+}
