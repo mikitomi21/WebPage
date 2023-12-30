@@ -47,9 +47,14 @@
 		&::after {
 			display: block;
 			position: relative;
-			content: 'Zaloguj';
 			z-index: 2;
 			transition: color 0.3s;
+		}
+		&[data-page='login']::after {
+			content: 'Zaloguj';
+		}
+		&[data-page='registration']::after {
+			content: 'Zarejestruj';
 		}
 		&::before {
 			position: absolute;
@@ -128,6 +133,19 @@
 				transform: translateY(-50%) translateX(-15px);
 				opacity: 1;
 			}
+		}
+	}
+}
+
+.swap_page {
+	display: flex;
+	gap: 10px;
+	a {
+		color: var(--main-light);
+		transition: color 0.3s;
+		text-decoration: none;
+		&:hover {
+			color: var(--main-gold);
 		}
 	}
 }

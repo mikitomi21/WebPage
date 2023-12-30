@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './page.module.scss';
 
 export default function Login() {
@@ -13,6 +14,9 @@ export default function Login() {
 							type='text'
 							name='userName'
 							id='userName'
+							autoComplete='off'
+							minLength={4}
+							required
 						/>
 						<div className={styles.input_focus}></div>
 					</div>
@@ -25,11 +29,17 @@ export default function Login() {
 							type='password'
 							name='password'
 							id='password'
+							minLength={6}
+							required
 						/>
 						<div className={styles.input_focus}></div>
 					</div>
 				</div>
-				<button></button>
+				<button data-page='login'></button>
+				<div className={styles.swap_page}>
+					<p>Nie masz konta?</p>
+					<Link href='/rejestracja'>Zarejestruj się</Link>
+				</div>
 			</form>
 		</section>
 	);
