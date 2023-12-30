@@ -15,6 +15,8 @@ export default function Login() {
 							name='userName'
 							id='userName'
 							autoComplete='off'
+							minLength={4}
+							required
 						/>
 						<div className={styles.input_focus}></div>
 					</div>
@@ -27,14 +29,16 @@ export default function Login() {
 							type='password'
 							name='password'
 							id='password'
+							minLength={6}
+							required
 						/>
 						<div className={styles.input_focus}></div>
 					</div>
 				</div>
-				<button></button>
-				<div className={styles.sign_up}>
+				<button data-page='login'></button>
+				<div className={styles.swap_page}>
 					<p>Nie masz konta?</p>
-					<Link href='/register'>Zarejestruj się</Link>
+					<Link href='/rejestracja'>Zarejestruj się</Link>
 				</div>
 			</form>
 		</section>

@@ -47,9 +47,14 @@
 		&::after {
 			display: block;
 			position: relative;
-			content: 'Zaloguj';
 			z-index: 2;
 			transition: color 0.3s;
+		}
+		&[data-page='login']::after {
+			content: 'Zaloguj';
+		}
+		&[data-page='registration']::after {
+			content: 'Zarejestruj';
 		}
 		&::before {
 			position: absolute;
@@ -132,7 +137,7 @@
 	}
 }
 
-.sign_up {
+.swap_page {
 	display: flex;
 	gap: 10px;
 	a {
