@@ -1,21 +1,21 @@
 import Link from 'next/link';
 import styles from './page.module.scss';
+import signIn from '../lib/actions';
 
 export default function Login() {
 	return (
 		<section className={styles.container}>
 			<h3>Zaloguj się</h3>
-			<form className={styles.form}>
+			<form className={styles.form} onSubmit={signIn}>
 				<div className={styles.form_field}>
-					<label htmlFor='userName'>Nazwa użytkownika</label>
+					<label htmlFor='email'>Email</label>
 					<div className={styles.input_container}>
 						<input
 							className={styles.input}
-							type='text'
-							name='userName'
-							id='userName'
+							type='email'
+							name='email'
+							id='email'
 							autoComplete='off'
-							minLength={4}
 							required
 						/>
 						<div className={styles.input_focus}></div>
