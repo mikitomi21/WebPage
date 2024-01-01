@@ -1,22 +1,56 @@
+'use client';
 import Link from 'next/link';
 import styles from './page.module.scss';
+import { useRouter } from 'next/navigation';
+import { FormEvent, useState } from 'react';
+import useTokenContext from '../lib/hooks/useTokenContext';
 
 export default function Login() {
+	const router = useRouter();
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [error, setError] = useState('');
+	const { token, setToken } = useTokenContext();
+
+	const signIn = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const userCredentials = { email, password };
+
+		const authFetch = await fetch(
+			'http://localhost:8000/api/auth/token/login',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(userCredentials),
+			}
+		);
+
+		if (authFetch.status === 200) {
+			const tokenResponse = await authFetch.json();
+			setToken(tokenResponse.auth_token);
+			router.push('/');
+		} else {
+			setError('Zostały wprowadzone złe dane!');
+		}
+	};
+
 	return (
 		<section className={styles.container}>
 			<h3>Zaloguj się</h3>
-			<form className={styles.form}>
+			<form className={styles.form} onSubmit={signIn}>
 				<div className={styles.form_field}>
-					<label htmlFor='userName'>Nazwa użytkownika</label>
+					<label htmlFor='email'>Email</label>
 					<div className={styles.input_container}>
 						<input
 							className={styles.input}
-							type='text'
-							name='userName'
-							id='userName'
+							type='email'
+							name='email'
+							id='email'
 							autoComplete='off'
-							minLength={4}
 							required
+							onChange={(e) => setEmail(e.target.value)}
 						/>
 						<div className={styles.input_focus}></div>
 					</div>
@@ -31,6 +65,7 @@ export default function Login() {
 							id='password'
 							minLength={6}
 							required
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<div className={styles.input_focus}></div>
 					</div>
@@ -40,6 +75,7 @@ export default function Login() {
 					<p>Nie masz konta?</p>
 					<Link href='/rejestracja'>Zarejestruj się</Link>
 				</div>
+				<p className={styles.error}>{error}</p>
 			</form>
 		</section>
 	);
