@@ -1,15 +1,16 @@
 'use client';
 import Link from 'next/link';
 import styles from './page.module.scss';
-// import signIn from '../lib/actions';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import useTokenContext from '../lib/hooks/useTokenContext';
 
 export default function Login() {
 	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
+	const { token, setToken } = useTokenContext();
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -27,6 +28,8 @@ export default function Login() {
 		);
 
 		if (authFetch.status === 200) {
+			const tokenResponse = await authFetch.json();
+			setToken(tokenResponse.auth_token);
 			router.push('/');
 		} else {
 			setError('Zostały wprowadzone złe dane!');
