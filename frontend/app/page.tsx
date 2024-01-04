@@ -7,6 +7,7 @@ import useTokenContext from './lib/hooks/useTokenContext';
 import PostsList from './lib/components/posts/PostsList';
 import { Post } from './lib/types/types';
 
+
 export default function Home() {
 	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
 	const router = useRouter();
