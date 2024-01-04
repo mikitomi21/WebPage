@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import useTokenContext from '../lib/hooks/useTokenContext';
 import useFetch from '../lib/hooks/useFetch';
+import useLocalStorage from '../lib/hooks/useLocalStorage';
 
 export default function Login() {
 	const router = useRouter();
@@ -12,6 +13,7 @@ export default function Login() {
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const { token, setToken } = useTokenContext();
+	const [value, setValue] = useLocalStorage('shareSpaceToken',"");
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -27,6 +29,7 @@ export default function Login() {
 		if (status === 200) {
 			const tokenResponse = await response.json();
 			setToken(tokenResponse.auth_token);
+			setValue(tokenResponse.auth_token);
 			router.push('/');
 		} else {
 			setError('Zostały wprowadzone złe dane!');
