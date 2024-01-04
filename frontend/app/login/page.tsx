@@ -4,6 +4,7 @@ import styles from './page.module.scss';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import useTokenContext from '../lib/hooks/useTokenContext';
+import useFetch from '../lib/hooks/useFetch';
 
 export default function Login() {
 	const router = useRouter();
@@ -16,19 +17,15 @@ export default function Login() {
 		e.preventDefault();
 		const userCredentials = { email, password };
 
-		const authFetch = await fetch(
-			'http://localhost:8000/api/auth/token/login',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(userCredentials),
-			}
+		const { response, status } = await useFetch(
+			'/auth/token/login',
+			'POST',
+			{ 'Content-Type': 'application/json' },
+			userCredentials
 		);
 
-		if (authFetch.status === 200) {
-			const tokenResponse = await authFetch.json();
+		if (status === 200) {
+			const tokenResponse = await response.json();
 			setToken(tokenResponse.auth_token);
 			router.push('/');
 		} else {

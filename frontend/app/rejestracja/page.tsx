@@ -2,6 +2,7 @@
 import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import styles from '../login/page.module.scss';
+import useFetch from '../lib/hooks/useFetch';
 
 export default function Registration() {
 	const [email, setEmail] = useState('');
@@ -20,23 +21,27 @@ export default function Registration() {
 			username: userName,
 			password,
 		};
-		console.log(userCredentials);
-		const registerFetch = await fetch('http://localhost:8000/api/users/', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(userCredentials),
-		});
-		if (registerFetch.status === 201) {
+
+		const { response, status } = await useFetch(
+			'/users/',
+			'POST',
+			{ 'Content-Type': 'application/json' },
+			userCredentials
+		);
+
+		if (status === 201) {
 			setError('Zarejestrowano pomyślnie!');
-		} else if (registerFetch.status == 400) {
-			const registerError = await registerFetch.json();
+		} else if (response.status == 400) {
+			const registerError = await response.json();
 			if (registerError.email & registerError.usernmae)
 				setError('Konto z takimi danymi już istnieje!');
 			else if (registerError.email) setError('Podany adres email jest zajęty!');
 			else if (registerError.username)
 				setError('Podana nazwa użytkownika jest zajęta!');
+			else if (registerError.password)
+				setError(
+					'Podana hasło jest zbyt proste! Użyj liter, cyfr i znaków specjalnych.'
+				);
 			else {
 				setError('Wystąpił nieoczekiwany bład!');
 			}
