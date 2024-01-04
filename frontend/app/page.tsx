@@ -4,15 +4,8 @@ import styles from './page.module.scss';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useTokenContext from './lib/hooks/useTokenContext';
-
-type Post = {
-	author: {
-		first_name: string;
-		last_name: string;
-	};
-	title: string;
-	text: string;
-};
+import PostsList from './lib/components/posts/PostsList';
+import { Post } from './lib/types/types';
 
 export default function Home() {
 	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
@@ -37,22 +30,5 @@ export default function Home() {
 			</div>
 		);
 
-	return (
-		<div className={styles.posts}>
-			{posts.map((post, index) => {
-				return (
-					<div className={styles.post} key={index}>
-						<div className={styles.user}>
-							<div className={styles.user_avatar}></div>
-							<h3 className={styles.user_name}>
-								{post.author.first_name} {post.author.last_name}
-							</h3>
-						</div>
-						<h2 className={styles.post_title}>"{post.title}"</h2>
-						<p className={styles.post_text}>{post.text}</p>
-					</div>
-				);
-			})}
-		</div>
-	);
+	return <PostsList posts={posts} />;
 }
