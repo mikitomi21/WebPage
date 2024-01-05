@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.scss';
 import TokenContextProvider from './lib/context/token-context';
 import Footer from './lib/components/global/Footer';
+import Nav from './lib/components/global/Nav';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -18,8 +19,11 @@ export default function RootLayout({
 	return (
 		<html lang='pl'>
 			<body className={inter.className}>
-				<TokenContextProvider>{children}</TokenContextProvider>
-				<Footer />
+				<TokenContextProvider>
+					<Nav />
+					<div className='content'>{children}</div>
+					<Footer />
+				</TokenContextProvider>
 			</body>
 		</html>
 	);

@@ -1,8 +1,8 @@
 .container {
 	max-width: var(--max-width);
-	margin: 100px auto 0 auto;
+	margin: var(--nav-padding) auto 0 auto;
 	padding: 50px;
-	border-radius: 30px;
+	border-radius: var(--border-radius);
 	background: var(--main-dark);
 
 	h3 {
