@@ -9,10 +9,12 @@
 	--border-radius: 15px;
 	--nav-padding: 100px;
 	--nav-height: calc(var(--nav-padding) - 20px);
+	--global-padding: 20px;
 }
 @media (min-width: 1080px) {
 	:root {
 		--nav-padding: 140px;
+		--global-padding: 50px;
 	}
 }
 * {
