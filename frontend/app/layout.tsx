@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.scss';
 import TokenContextProvider from './lib/context/token-context';
-import Footer from './lib/components/global/Footer';
-import Nav from './lib/components/global/Nav';
+import Footer from './lib/components/global/footer/Footer';
+import Nav from './lib/components/nav/Nav';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
