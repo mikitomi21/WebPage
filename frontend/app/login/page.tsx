@@ -50,6 +50,7 @@ export default function Login() {
 							id='email'
 							autoComplete='off'
 							required
+							autoFocus
 							onChange={(e) => setEmail(e.target.value)}
 						/>
 						<div className={styles.input_focus}></div>
