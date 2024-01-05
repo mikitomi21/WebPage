@@ -4,6 +4,8 @@ import styles from './page.module.scss';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import useTokenContext from '../lib/hooks/useTokenContext';
+import useFetch from '../lib/hooks/useFetch';
+import useLocalStorage from '../lib/hooks/useLocalStorage';
 
 export default function Login() {
 	const router = useRouter();
@@ -11,25 +13,23 @@ export default function Login() {
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const { token, setToken } = useTokenContext();
+	const [value, setValue] = useLocalStorage('shareSpaceToken',"");
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const userCredentials = { email, password };
 
-		const authFetch = await fetch(
-			'http://localhost:8000/api/auth/token/login',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(userCredentials),
-			}
+		const { response, status } = await useFetch(
+			'/auth/token/login',
+			'POST',
+			{ 'Content-Type': 'application/json' },
+			userCredentials
 		);
 
-		if (authFetch.status === 200) {
-			const tokenResponse = await authFetch.json();
+		if (status === 200) {
+			const tokenResponse = await response.json();
 			setToken(tokenResponse.auth_token);
+			setValue(tokenResponse.auth_token);
 			router.push('/');
 		} else {
 			setError('Zostały wprowadzone złe dane!');
@@ -50,6 +50,7 @@ export default function Login() {
 							id='email'
 							autoComplete='off'
 							required
+							autoFocus
 							onChange={(e) => setEmail(e.target.value)}
 						/>
 						<div className={styles.input_focus}></div>
