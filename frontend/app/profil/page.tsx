@@ -3,23 +3,29 @@ import styles from '../lib/components/global/forms/forms.module.scss';
 import useLocalStorage from '../lib/hooks/useLocalStorage';
 import { User } from '../lib/types/types';
 import { FormEvent, useEffect, useState } from 'react';
-import Link from 'next/link';
 import useFetch from '../lib/hooks/useFetch';
 import { useRouter } from 'next/navigation';
 
 export default function Profile() {
 	const router = useRouter();
+	const [tokenLS, setTokenLS, removeTokenLS] = useLocalStorage(
+		'shareSpaceToken',
+		''
+	);
+	if (!tokenLS) {
+		router.push('/');
+	}
+	const [userLS, setUserLS, removeUserLS] = useLocalStorage<User>(
+		'shareSpaceUser',
+		''
+	);
 
-	const [userLS, setUserLS] = useLocalStorage<User>('shareSpaceUser');
-	const [tokenLS, setTokenLS] = useLocalStorage('shareSpaceToken');
 	const [email, setEmail] = useState('');
 	const [userName, setUserName] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [error, setError] = useState('');
-	if (!tokenLS) {
-		router.push('/');
-	}
+
 	useEffect(() => {
 		setEmail(userLS.email);
 		setUserName(userLS.username);

@@ -14,8 +14,14 @@ export default function Login() {
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const { user, setUser } = useUserContext();
-	const [tokenLS, setTokenLS] = useLocalStorage<string>('shareSpaceToken');
-	const [userLS, setUserLS] = useLocalStorage<User>('shareSpaceUser');
+	const [tokenLS, setTokenLS, removeTokenLS] = useLocalStorage<string>(
+		'shareSpaceToken',
+		''
+	);
+	const [userLS, setUserLS, removeUserLS] = useLocalStorage<User>(
+		'shareSpaceUser',
+		''
+	);
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -30,22 +36,21 @@ export default function Login() {
 
 		if (status === 200) {
 			const tokenResponse = await response.json();
-			setUserInfo();
 			setTokenLS(tokenResponse.auth_token);
+			setUserInfo(tokenResponse.auth_token);
 			router.push('/');
 		} else {
 			setError('Zostały wprowadzone złe dane!');
 		}
 	};
 
-	const setUserInfo = async () => {
+	const setUserInfo = async (token: string) => {
 		const { response, status } = await useFetch('/users/me/', 'GET', {
-			Authorization: `Token ${tokenLS}`,
+			Authorization: `Token ${token}`,
 		});
 		if (status == 200) {
 			const userInfoResponse: User = await response.json();
 			setUserLS(userInfoResponse);
-
 		}
 	};
 

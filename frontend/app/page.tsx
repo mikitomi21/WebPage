@@ -8,9 +8,11 @@ import useLocalStorage from './lib/hooks/useLocalStorage';
 
 export default function Home() {
 	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
+	const [tokenLS, setTokenLS, removeTokenLS] = useLocalStorage<string>(
+		'shareSpaceToken',
+		''
+	);
 	const router = useRouter();
-	const [tokenLS, setTokenLS] = useLocalStorage<string>('shareSpaceToken');
-
 	if (!tokenLS) {
 		router.push('/login');
 	}
