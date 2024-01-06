@@ -1,6 +1,4 @@
 'use client';
-import Image from 'next/image';
-import styles from './page.module.scss';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 // import useTokenContext from './lib/hooks/useTokenContext';
@@ -11,6 +9,10 @@ import useLocalStorage from './lib/hooks/useLocalStorage';
 
 export default function Home() {
 	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
+	const [tokenLS, setTokenLS, removeTokenLS] = useLocalStorage<string>(
+		'shareSpaceToken',
+		''
+	);
 	const router = useRouter();
 	// const { token, setToken } = useTokenContext();
 	const [value, setValue] = useLocalStorage('shareSpaceToken', '');
