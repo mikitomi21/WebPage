@@ -11,16 +11,16 @@ import useLocalStorage from './lib/hooks/useLocalStorage';
 export default function Home() {
 	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
 	const router = useRouter();
-	const [value, setValue] = useLocalStorage('shareSpaceToken', '');
+	const [tokenLS, setTokenLS] = useLocalStorage<string>('shareSpaceToken');
 
-	if (!value) {
+	if (!tokenLS) {
 		router.push('/login');
 	}
 
 	useEffect(() => {
 		const getPosts = async () => {
 			const { response, status } = await useFetch('/posts/', 'GET', {
-				Authorization: `Token ${value}`,
+				Authorization: `Token ${tokenLS}`,
 			});
 			const res = response.json();
 			res.then((postsFromDB) => setPosts(postsFromDB));

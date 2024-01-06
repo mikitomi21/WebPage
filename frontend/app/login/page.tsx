@@ -6,6 +6,7 @@ import { FormEvent, useState } from 'react';
 import useUserContext from '../lib/hooks/useUserContext';
 import useFetch from '../lib/hooks/useFetch';
 import useLocalStorage from '../lib/hooks/useLocalStorage';
+import { User } from '../lib/types/types';
 
 export default function Login() {
 	const router = useRouter();
@@ -13,7 +14,8 @@ export default function Login() {
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const { user, setUser } = useUserContext();
-	const [value, setValue] = useLocalStorage('shareSpaceToken', '');
+	const [tokenLS, setTokenLS] = useLocalStorage<string>('shareSpaceToken');
+	const [userLS, setUserLS] = useLocalStorage<User>('shareSpaceUser');
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -29,7 +31,7 @@ export default function Login() {
 		if (status === 200) {
 			const tokenResponse = await response.json();
 			setUserInfo();
-			setValue(tokenResponse.auth_token);
+			setTokenLS(tokenResponse.auth_token);
 			router.push('/');
 		} else {
 			setError('Zostały wprowadzone złe dane!');
@@ -38,12 +40,12 @@ export default function Login() {
 
 	const setUserInfo = async () => {
 		const { response, status } = await useFetch('/users/me/', 'GET', {
-			Authorization: `Token ${value}`,
+			Authorization: `Token ${tokenLS}`,
 		});
 		if (status == 200) {
-			const userInfoResponse = await response.json();
-			console.log(userInfoResponse);
-			setUser(userInfoResponse);
+			const userInfoResponse: User = await response.json();
+			setUserLS(userInfoResponse);
+
 		}
 	};
 
