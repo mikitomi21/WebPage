@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import styles from './page.module.scss';
+import styles from '../lib/components/global/forms/forms.module.scss';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import useUserContext from '../lib/hooks/useUserContext';

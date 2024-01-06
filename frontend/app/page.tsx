@@ -1,6 +1,4 @@
 'use client';
-import Image from 'next/image';
-import styles from './page.module.scss';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PostsList from './lib/components/posts/PostsList';

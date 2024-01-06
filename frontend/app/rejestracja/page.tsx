@@ -1,7 +1,7 @@
 'use client';
 import { FormEvent, useState } from 'react';
 import Link from 'next/link';
-import styles from '../login/page.module.scss';
+import styles from '../lib/components/global/forms/forms.module.scss';
 import useFetch from '../lib/hooks/useFetch';
 
 export default function Registration() {
