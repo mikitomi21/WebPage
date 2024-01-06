@@ -13,7 +13,7 @@ export default function Login() {
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const { user, setUser } = useUserContext();
-	const [value, setValue] = useLocalStorage('shareSpaceToken',"");
+	const [value, setValue] = useLocalStorage('shareSpaceToken', '');
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -28,11 +28,22 @@ export default function Login() {
 
 		if (status === 200) {
 			const tokenResponse = await response.json();
-			setUser(tokenResponse.auth_token);
+			setUserInfo();
 			setValue(tokenResponse.auth_token);
 			router.push('/');
 		} else {
 			setError('Zostały wprowadzone złe dane!');
+		}
+	};
+
+	const setUserInfo = async () => {
+		const { response, status } = await useFetch('/users/me/', 'GET', {
+			Authorization: `Token ${value}`,
+		});
+		if (status == 200) {
+			const userInfoResponse = await response.json();
+			console.log(userInfoResponse);
+			setUser(userInfoResponse);
 		}
 	};
 
