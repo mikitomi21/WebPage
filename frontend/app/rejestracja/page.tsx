@@ -65,6 +65,7 @@ export default function Registration() {
 							autoComplete='off'
 							minLength={4}
 							required
+							autoFocus
 							onChange={(e) => setUserName(e.target.value)}
 						/>
 						<div className={styles.input_focus}></div>
