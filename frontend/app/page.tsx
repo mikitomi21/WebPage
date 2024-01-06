@@ -4,23 +4,22 @@ import { useRouter } from 'next/navigation';
 import PostsList from './lib/components/posts/PostsList';
 import { Post } from './lib/types/types';
 import useFetch from './lib/hooks/useFetch';
-import useLocalStorage from './lib/hooks/useLocalStorage';
+import secureLocalStorage from 'react-secure-storage';
 
 export default function Home() {
+	const token = secureLocalStorage.getItem('shareSpaceToken');
 	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
-	const [tokenLS, setTokenLS, removeTokenLS] = useLocalStorage<string>(
-		'shareSpaceToken',
-		''
-	);
+
 	const router = useRouter();
-	if (!tokenLS) {
+
+	if (!token) {
 		router.push('/login');
 	}
 
 	useEffect(() => {
 		const getPosts = async () => {
 			const { response, status } = await useFetch('/posts/', 'GET', {
-				Authorization: `Token ${tokenLS}`,
+				Authorization: `Token ${token}`,
 			});
 			const res = response.json();
 			res.then((postsFromDB) => setPosts(postsFromDB));

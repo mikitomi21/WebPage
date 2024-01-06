@@ -1,24 +1,18 @@
 'use client';
 import styles from '../lib/components/global/forms/forms.module.scss';
-import useLocalStorage from '../lib/hooks/useLocalStorage';
 import { User } from '../lib/types/types';
 import { FormEvent, useEffect, useState } from 'react';
 import useFetch from '../lib/hooks/useFetch';
 import { useRouter } from 'next/navigation';
+import secureLocalStorage from 'react-secure-storage';
 
 export default function Profile() {
 	const router = useRouter();
-	const [tokenLS, setTokenLS, removeTokenLS] = useLocalStorage(
-		'shareSpaceToken',
-		''
-	);
-	if (!tokenLS) {
+	const token = secureLocalStorage.getItem('shareSpaceToken');
+
+	if (!token) {
 		router.push('/');
 	}
-	const [userLS, setUserLS, removeUserLS] = useLocalStorage<User>(
-		'shareSpaceUser',
-		''
-	);
 
 	const [email, setEmail] = useState('');
 	const [userName, setUserName] = useState('');
@@ -27,10 +21,19 @@ export default function Profile() {
 	const [error, setError] = useState('');
 
 	useEffect(() => {
-		setEmail(userLS.email);
-		setUserName(userLS.username);
-		setFirstName(userLS.first_name);
-		setLastName(userLS.last_name);
+		const fetchUserInfo = async () => {
+			const { response, status } = await useFetch('/users/me/', 'GET', {
+				Authorization: `Token ${token}`,
+			});
+			if (status == 200) {
+				const userInfoResponse: User = await response.json();
+				setEmail(userInfoResponse.email);
+				setUserName(userInfoResponse.username);
+				setFirstName(userInfoResponse.first_name);
+				setLastName(userInfoResponse.last_name);
+			}
+		};
+		fetchUserInfo();
 	}, []);
 
 	const updateUserInfo = async (e: FormEvent<HTMLFormElement>) => {
@@ -45,7 +48,7 @@ export default function Profile() {
 		const { response, status } = await useFetch(
 			'/users/me/',
 			'PATCH',
-			{ 'Content-Type': 'application/json', Authorization: `Token ${tokenLS}` },
+			{ 'Content-Type': 'application/json', Authorization: `Token ${token}` },
 			userCredentials
 		);
 
@@ -53,6 +56,7 @@ export default function Profile() {
 			setError('Dane zostały zaaktualizowane pomyślnie!');
 		}
 	};
+
 	return (
 		<div className={styles.container}>
 			<h3>Twój profil</h3>
@@ -66,7 +70,7 @@ export default function Profile() {
 							name='firstName'
 							id='firstName'
 							autoComplete='off'
-							defaultValue={userLS.first_name}
+							defaultValue={firstName}
 							onChange={(e) => setFirstName(e.target.value)}
 						/>
 						<div className={styles.input_focus}></div>
@@ -81,7 +85,7 @@ export default function Profile() {
 							name='lastName'
 							id='lastName'
 							autoComplete='off'
-							defaultValue={userLS.last_name}
+							defaultValue={lastName}
 							onChange={(e) => setLastName(e.target.value)}
 						/>
 						<div className={styles.input_focus}></div>
@@ -96,7 +100,7 @@ export default function Profile() {
 							name='userName'
 							id='userName'
 							autoComplete='off'
-							defaultValue={userLS.username}
+							defaultValue={userName}
 							minLength={4}
 							required
 							onChange={(e) => setUserName(e.target.value)}
@@ -113,7 +117,7 @@ export default function Profile() {
 							name='email'
 							id='email'
 							autoComplete='off'
-							defaultValue={userLS.email}
+							defaultValue={email}
 							required
 							onChange={(e) => setEmail(e.target.value)}
 						/>
