@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styles from './page.module.scss';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import useTokenContext from '../lib/hooks/useTokenContext';
+import useUserContext from '../lib/hooks/useUserContext';
 import useFetch from '../lib/hooks/useFetch';
 import useLocalStorage from '../lib/hooks/useLocalStorage';
 
@@ -12,7 +12,7 @@ export default function Login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
-	const { token, setToken } = useTokenContext();
+	const { user, setUser } = useUserContext();
 	const [value, setValue] = useLocalStorage('shareSpaceToken',"");
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
@@ -28,7 +28,7 @@ export default function Login() {
 
 		if (status === 200) {
 			const tokenResponse = await response.json();
-			setToken(tokenResponse.auth_token);
+			setUser(tokenResponse.auth_token);
 			setValue(tokenResponse.auth_token);
 			router.push('/');
 		} else {
