@@ -1,19 +1,27 @@
 'use client';
 import Link from 'next/link';
-import styles from './page.module.scss';
+import styles from '../lib/components/global/forms/forms.module.scss';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import useTokenContext from '../lib/hooks/useTokenContext';
+import useUserContext from '../lib/hooks/useUserContext';
 import useFetch from '../lib/hooks/useFetch';
 import useLocalStorage from '../lib/hooks/useLocalStorage';
+import { User } from '../lib/types/types';
 
 export default function Login() {
 	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
-	const { token, setToken } = useTokenContext();
-	const [value, setValue] = useLocalStorage('shareSpaceToken',"");
+	const { user, setUser } = useUserContext();
+	const [tokenLS, setTokenLS, removeTokenLS] = useLocalStorage<string>(
+		'shareSpaceToken',
+		''
+	);
+	const [userLS, setUserLS, removeUserLS] = useLocalStorage<User>(
+		'shareSpaceUser',
+		''
+	);
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -28,11 +36,21 @@ export default function Login() {
 
 		if (status === 200) {
 			const tokenResponse = await response.json();
-			setToken(tokenResponse.auth_token);
-			setValue(tokenResponse.auth_token);
+			setTokenLS(tokenResponse.auth_token);
+			setUserInfo(tokenResponse.auth_token);
 			router.push('/');
 		} else {
 			setError('Zostały wprowadzone złe dane!');
+		}
+	};
+
+	const setUserInfo = async (token: string) => {
+		const { response, status } = await useFetch('/users/me/', 'GET', {
+			Authorization: `Token ${token}`,
+		});
+		if (status == 200) {
+			const userInfoResponse: User = await response.json();
+			setUserLS(userInfoResponse);
 		}
 	};
 

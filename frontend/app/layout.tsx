@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.scss';
-import TokenContextProvider from './lib/context/token-context';
+import UserContextProvider from './lib/context/user-context';
 import Footer from './lib/components/global/footer/Footer';
-import Nav from './lib/components/nav/Nav';
+import Nav from './lib/components/global/nav/Nav';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -19,11 +19,11 @@ export default function RootLayout({
 	return (
 		<html lang='pl'>
 			<body className={inter.className}>
-				<TokenContextProvider>
+				<UserContextProvider>
 					<Nav />
 					<div className='content'>{children}</div>
 					<Footer />
-				</TokenContextProvider>
+				</UserContextProvider>
 			</body>
 		</html>
 	);
