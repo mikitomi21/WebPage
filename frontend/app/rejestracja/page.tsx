@@ -3,13 +3,17 @@ import { FormEvent, useState } from 'react';
 import Link from 'next/link';
 import styles from '../lib/components/global/forms/forms.module.scss';
 import useFetch from '../lib/hooks/useFetch';
+import secureLocalStorage from 'react-secure-storage';
+import { useRouter } from 'next/navigation';
 
 export default function Registration() {
+	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [userName, setUserName] = useState('');
 	const [error, setError] = useState('');
+	const token = secureLocalStorage.getItem('shareSpaceToken');
 
 	const register = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -49,6 +53,10 @@ export default function Registration() {
 			setError('Wystąpił nieoczekiwany bład!');
 		}
 	};
+	
+	if (token) {
+		router.push('/');
+	}
 
 	return (
 		<section className={styles.container}>

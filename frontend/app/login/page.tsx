@@ -2,7 +2,14 @@
 import Link from 'next/link';
 import styles from '../lib/components/global/forms/forms.module.scss';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import {
+	FormEvent,
+	use,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useState,
+} from 'react';
 import useLoginContext from '../lib/hooks/useLoginContext';
 import useFetch from '../lib/hooks/useFetch';
 import secureLocalStorage from 'react-secure-storage';
@@ -13,6 +20,7 @@ export default function Login() {
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
 	const { isLoggedIn, setIsLoggedIn } = useLoginContext();
+	const token = secureLocalStorage.getItem('shareSpaceToken');
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -35,6 +43,9 @@ export default function Login() {
 		}
 	};
 
+	if (token) {
+		router.push('/');
+	}
 	return (
 		<section className={styles.container}>
 			<h3>Zaloguj się</h3>
