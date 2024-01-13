@@ -5,55 +5,47 @@ import styles from '../lib/components/global/forms/forms.module.scss';
 import useFetch from '../lib/hooks/useFetch';
 import secureLocalStorage from 'react-secure-storage';
 import { useRouter } from 'next/navigation';
-
+import useRegistration from '../lib/hooks/useRegistration';
+import useLogin from '../lib/hooks/useLogin';
+import useLoginContext from '../lib/hooks/useLoginContext';
 export default function Registration() {
 	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [userName, setUserName] = useState('');
-	const [error, setError] = useState('');
+	const [message, setMessage] = useState('');
+	const { isLoggedIn, setIsLoggedIn } = useLoginContext();
 	const token = secureLocalStorage.getItem('shareSpaceToken');
 
 	const register = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if (!(password === confirmPassword))
-			setError('Podane hasła różnią się od siebie!');
-
+		if (!(password === confirmPassword)) {
+			setMessage('Podane hasła różnią się od siebie!');
+			return;
+		}
 		const userCredentials = {
 			email,
 			username: userName,
 			password,
 		};
-
-		const { response, status } = await useFetch(
-			'/users/',
-			'POST',
-			{ 'Content-Type': 'application/json' },
+		const { signedUp, registrationError } = await useRegistration(
 			userCredentials
 		);
-
-		if (status === 201) {
-			setError('Zarejestrowano pomyślnie!');
-		} else if (response.status == 400) {
-			const registerError = await response.json();
-			if (registerError.email & registerError.usernmae)
-				setError('Konto z takimi danymi już istnieje!');
-			else if (registerError.email) setError('Podany adres email jest zajęty!');
-			else if (registerError.username)
-				setError('Podana nazwa użytkownika jest zajęta!');
-			else if (registerError.password)
-				setError(
-					'Podana hasło jest zbyt proste! Użyj liter, cyfr i znaków specjalnych.'
-				);
-			else {
-				setError('Wystąpił nieoczekiwany bład!');
+		if (signedUp) {
+			setMessage(registrationError);
+			const { loggedIn, loginError } = await useLogin({ email, password });
+			if (loggedIn) {
+				setIsLoggedIn(true);
+				router.push('/');
+			} else {
+				setMessage(loginError);
 			}
 		} else {
-			setError('Wystąpił nieoczekiwany bład!');
+			setMessage(registrationError);
 		}
 	};
-	
+
 	if (token) {
 		router.push('/');
 	}
@@ -102,7 +94,7 @@ export default function Registration() {
 							type='password'
 							name='password'
 							id='password'
-							minLength={6}
+							minLength={10}
 							required
 							onChange={(e) => setPassword(e.target.value)}
 						/>
@@ -117,7 +109,7 @@ export default function Registration() {
 							type='password'
 							name='password'
 							id='password'
-							minLength={6}
+							minLength={10}
 							required
 							onChange={(e) => setConfirmPassword(e.target.value)}
 						/>
@@ -129,7 +121,7 @@ export default function Registration() {
 					<p>Masz już konto?</p>
 					<Link href='/login'>Zaloguj się</Link>
 				</div>
-				<p className={styles.error}>{error}</p>
+				<p className={styles.error}>{message}</p>
 			</form>
 		</section>
 	);
