@@ -1,5 +1,4 @@
 export type Post = {
-	author: Author;
 	id: number;
 	likes: number[];
 	comments: Comment[];
