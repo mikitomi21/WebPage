@@ -41,14 +41,15 @@
 	margin: 0 var(--global-padding) 0 0;
 	.icon {
 		color: var(--main-gold);
-		font-size: 50px;
+		font-size: 38px;
 		transition: color 0.1s ease-in-out;
+		display: flex;
+		align-items: center;
 		&:hover {
 			color: var(--main-purple);
 		}
 	}
 }
-
 
 @media (min-width: 1080px) {
 	.nav {
@@ -57,4 +58,10 @@
 	.logo {
 		font-size: 1.4rem;
 	}
+	.icons div {
+		.icon {
+			font-size: 50px;
+		}
+	}
+
 }

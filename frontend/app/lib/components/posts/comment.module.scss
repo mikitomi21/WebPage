@@ -1,0 +1,24 @@
+.comment {
+	margin: 25px 0 0 0;
+	border-top: 1px solid var(--main-gold);
+	&_user {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin: 15px 0 0 0;
+		font-size: 0.8rem;
+	}
+	&_avatar {
+		border-radius: 50%;
+	}
+	&_text {
+		margin: 8px 0;
+		font-size: 0.9rem;
+	}
+	&_likes {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		cursor: pointer;
+	}
+}
