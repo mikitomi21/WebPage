@@ -5,11 +5,11 @@ type FetchResult = {
 
 export default async function useFetch(
 	endpoint: string,
-	method: 'GET' | 'POST' | "PATCH",
-    headers: any,
+	method: 'GET' | 'POST' | 'PATCH',
+	headers: any,
 	payload?: any
 ): Promise<FetchResult> {
-	const response = await fetch(`http://localhost:8000/api${endpoint}`, {
+	const response = await fetch(`http://krzysztofpe.pl:8000/api${endpoint}`, {
 		method,
 		headers,
 		body: JSON.stringify(payload),
