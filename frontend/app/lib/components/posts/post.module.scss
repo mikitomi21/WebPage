@@ -5,6 +5,9 @@
 	margin: 0 auto;
 	gap: 20px;
 	padding-top: var(--nav-padding);
+	&_hello {
+		padding: 0 0 0 var(--global-padding);
+	}
 }
 .post {
 	color: var(--main-light);
@@ -33,6 +36,30 @@
 		padding: 10px 0 0 0;
 		font-size: 0.9rem;
 	}
+	&_stats {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		padding: 20px 0 0 0;
+		font-size: 1.3rem;
+		&_likes {
+			svg {
+				font-size: 1.3rem !important;
+			}
+		}
+		&_comments {
+			svg {
+				font-size: 1.5rem;
+			}
+		}
+		div {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 5px;
+			cursor: pointer;
+		}
+	}
 }
 
 .user {
@@ -59,6 +86,22 @@
 		}
 		&_text {
 			font-size: 1rem;
+		}
+		&_stats {
+			padding: 25px 0 0 0;
+			max-width: 250px;
+			margin: 0 auto;
+			font-size: 1.4rem;
+			&_likes {
+				svg {
+					font-size: 1.4rem !important;
+				}
+			}
+			&_comments {
+				svg {
+					font-size: 1.8rem;
+				}
+			}
 		}
 	}
 }
