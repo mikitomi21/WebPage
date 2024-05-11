@@ -1,14 +1,7 @@
 .posts {
-	max-width: var(--max-width);
 	display: flex;
 	flex-direction: column;
-	margin: 0 auto;
 	gap: 20px;
-	padding-top: var(--nav-padding);
-	&_hello {
-		padding: 0 0 0 var(--global-padding);
-	}
-
 }
 .post {
 	color: var(--main-light);
@@ -61,7 +54,6 @@
 			cursor: pointer;
 		}
 	}
-
 }
 
 .user {
@@ -105,6 +97,5 @@
 				}
 			}
 		}
-
 	}
 }
