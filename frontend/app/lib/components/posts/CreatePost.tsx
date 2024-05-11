@@ -1,9 +1,20 @@
+'use client';
+import { useFormState } from 'react-dom';
 import styles from './newPost.module.scss';
-export default function CreatePost() {
+import { createNewPost } from '../../actions/actions';
+type CreatePostProps = {
+	userName: string;
+	token: string;
+};
+const initialState = { message: '' };
+export default function CreatePost({ userName, token }: CreatePostProps) {
+	const [state, dispatch] = useFormState(createNewPost, initialState);
 	return (
 		<section className={styles.create_post}>
 			<h3>Co chodzi Ci po głowie?</h3>
-			<form action=''>
+			<form action={dispatch}>
+				<input type='hidden' name='token' value={token} />
+				<input type='hidden' name='userName' value={userName} />
 				<div className={styles.input_container}>
 					<label htmlFor='postTitle'>Tytuł:</label>
 					<input
@@ -21,6 +32,7 @@ export default function CreatePost() {
 					required
 				></textarea>
 				<button type='submit'>Stwórz nowy post</button>
+				<p className={styles.message}>{state?.message}</p>
 			</form>
 		</section>
 	);

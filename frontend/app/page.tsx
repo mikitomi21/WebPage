@@ -31,7 +31,7 @@ export default function Home() {
 	return (
 		<main className={styles.main}>
 			<h2 className={styles.main_hello}>Witaj, {userName}</h2>
-			<CreatePost />
+			<CreatePost userName={userName} token={token} />
 			<PostsList posts={posts} userName={userName} />
 		</main>
 	);
