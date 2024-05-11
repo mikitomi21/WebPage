@@ -31,6 +31,7 @@ export default async function useRegistration(
 				registrationError: 'Konto z takimi danymi już istnieje!',
 			};
 		else if (registerError.email)
+			//todo: obsługa gdy mail nie ma odpowiedniej struktury: np bez kropki
 			return {
 				signedUp: false,
 				registrationError: 'Podany adres email jest zajęty!',

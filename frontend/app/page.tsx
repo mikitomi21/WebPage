@@ -10,6 +10,7 @@ import { User } from './lib/types/types';
 import usePosts from './lib/hooks/usePosts';
 import useUserName from './lib/hooks/useUserName';
 import styles from './page.module.scss';
+import CreatePost from './lib/components/posts/CreatePost';
 export default function Home() {
 	const token = secureLocalStorage.getItem('shareSpaceToken') as string;
 
@@ -30,6 +31,7 @@ export default function Home() {
 	return (
 		<main className={styles.main}>
 			<h2 className={styles.main_hello}>Witaj, {userName}</h2>
+			<CreatePost />
 			<PostsList posts={posts} userName={userName} />
 		</main>
 	);
