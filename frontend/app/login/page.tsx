@@ -4,37 +4,32 @@ import styles from '../lib/components/global/forms/forms.module.scss';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
 import useLoginContext from '../lib/hooks/useLoginContext';
-import useFetch from '../lib/hooks/useFetch';
 import secureLocalStorage from 'react-secure-storage';
+import useLogin from '../lib/hooks/useLogin';
 
 export default function Login() {
 	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [error, setError] = useState('');
+	const [message, setMessage] = useState('');
 	const { isLoggedIn, setIsLoggedIn } = useLoginContext();
+	const token = secureLocalStorage.getItem('shareSpaceToken');
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const userCredentials = { email, password };
-
-		const { response, status } = await useFetch(
-			'/auth/token/login',
-			'POST',
-			{ 'Content-Type': 'application/json' },
-			userCredentials
-		);
-
-		if (status === 200) {
-			const tokenResponse = await response.json();
-			secureLocalStorage.setItem('shareSpaceToken', tokenResponse.auth_token);
+		const { loggedIn, loginError } = await useLogin(userCredentials);
+		if (loggedIn) {
 			setIsLoggedIn(true);
 			router.push('/');
 		} else {
-			setError('Zostały wprowadzone złe dane!');
+			setMessage(loginError);
 		}
 	};
 
+	if (token) {
+		router.push('/');
+	}
 	return (
 		<section className={styles.container}>
 			<h3>Zaloguj się</h3>
@@ -75,7 +70,7 @@ export default function Login() {
 					<p>Nie masz konta?</p>
 					<Link href='/rejestracja'>Zarejestruj się</Link>
 				</div>
-				<p className={styles.error}>{error}</p>
+				<p className={styles.error}>{message}</p>
 			</form>
 		</section>
 	);

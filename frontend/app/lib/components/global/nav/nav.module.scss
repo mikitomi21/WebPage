@@ -1,0 +1,67 @@
+.nav {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: var(--nav-height);
+	width: 100%;
+	max-width: var(--max-width);
+	left: 50%;
+	transform: translateX(-50%);
+	background: var(--main-dark);
+	border-radius: 0 0 var(--border-radius) var(--border-radius);
+	z-index: 100;
+	box-shadow: var(--dark-shadow);
+}
+.logo {
+	margin: 0 0 0 var(--global-padding);
+	border: 3px solid var(--main-gold);
+	color: var(--main-dark);
+	font-size: 1.1rem;
+	font-weight: bold;
+	cursor: pointer;
+	text-decoration: none;
+	&::after {
+		display: block;
+		transform: translate(7px, 7px);
+		content: 'ShareSpace';
+		background: var(--main-gold);
+		padding: 8px;
+		transition: transform 0.1s ease-in-out;
+	}
+	&:hover {
+		&::after {
+			transform: translate(0);
+		}
+	}
+}
+.icons div {
+	display: flex;
+	gap: 5px;
+	margin: 0 var(--global-padding) 0 0;
+	.icon {
+		color: var(--main-gold);
+		font-size: 38px;
+		transition: color 0.1s ease-in-out;
+		display: flex;
+		align-items: center;
+		&:hover {
+			color: var(--main-purple);
+		}
+	}
+}
+
+@media (min-width: 1080px) {
+	.nav {
+		font-size: 1.2rem;
+	}
+	.logo {
+		font-size: 1.4rem;
+	}
+	.icons div {
+		.icon {
+			font-size: 50px;
+		}
+	}
+
+}

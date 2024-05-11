@@ -44,8 +44,13 @@ p {
 	align-items: center;
 	width: 100%;
 	height: 100vh;
-	font-size: 4rem;
+	font-size: 1.7rem;
 }
 .content {
 	flex: 1;
+}
+@media (min-width: 1080px) {
+	.loader {
+	font-size: 4rem;
+}
 }
