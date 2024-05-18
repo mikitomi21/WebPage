@@ -2,7 +2,6 @@
 
 import useFetch from '../hooks/useFetch';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 type State = {
 	message?: string | null;
@@ -30,8 +29,15 @@ export async function createNewPost(prevState: State, formData: FormData) {
 		},
 		post
 	);
-	revalidatePath('/');
-	return {
-		message: 'Post został dodany!',
-	};
+
+	if (status === 201) {
+		revalidatePath('/');
+		return {
+			message: 'Post został dodany!',
+		};
+	} else {
+		return {
+			message: 'Wystąpił błąd podczas dodawania postu.',
+		};
+	}
 }

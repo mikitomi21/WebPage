@@ -1,18 +1,27 @@
 'use client';
-import { useFormState } from 'react-dom';
+
+import { FormEvent, useState } from 'react';
 import styles from './newPost.module.scss';
 import { createNewPost } from '../../actions/actions';
+import { useNewPost } from '../../hooks/useNewPost';
+
 type CreatePostProps = {
 	userName: string;
 	token: string;
+	refreshPosts: () => void;
 };
-const initialState = { message: '' };
-export default function CreatePost({ userName, token }: CreatePostProps) {
-	const [state, dispatch] = useFormState(createNewPost, initialState);
+
+export default function CreatePost({
+	userName,
+	token,
+	refreshPosts,
+}: CreatePostProps) {
+	const { message, handleSubmit } = useNewPost({ refreshPosts });
+
 	return (
 		<section className={styles.create_post}>
 			<h3>Co chodzi Ci po głowie?</h3>
-			<form action={dispatch}>
+			<form onSubmit={handleSubmit}>
 				<input type='hidden' name='token' value={token} />
 				<input type='hidden' name='userName' value={userName} />
 				<div className={styles.input_container}>
@@ -32,7 +41,7 @@ export default function CreatePost({ userName, token }: CreatePostProps) {
 					required
 				></textarea>
 				<button type='submit'>Stwórz nowy post</button>
-				<p className={styles.message}>{state?.message}</p>
+				<p className={styles.message}>{message}</p>
 			</form>
 		</section>
 	);

@@ -1,26 +1,37 @@
 import { useState, useEffect } from 'react';
 import useFetch from './useFetch';
-import { Post, User } from '../types/types';
-
-type usePostsProps = string;
+import { Post } from '../types/types';
 
 type usePostsReturn = {
 	posts: Post[] | undefined;
+	refreshPosts: () => void;
 };
-export default function usePosts(token: usePostsProps): usePostsReturn {
+
+export default function usePosts(token: string): usePostsReturn {
 	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
+	const [refresh, setRefresh] = useState(false);
+
+	const refreshPosts = () => {
+		setRefresh((prev) => !prev);
+	};
+
 	useEffect(() => {
 		const getPosts = async () => {
-			const { response, status } = await useFetch('/posts/', 'GET', {
+			const { response } = await useFetch('/posts/', 'GET', {
 				Authorization: `Token ${token}`,
 			});
 			const res = response.json();
-			res.then((postsFromDB) => setPosts(postsFromDB));
+			res.then((postsFromDB) => {
+				const sortedPosts = postsFromDB.sort((a: Post, b: Post) => b.id - a.id);
+				setPosts(sortedPosts);
+			});
 		};
 
 		getPosts();
-	}, [posts]);
+	}, [token, refresh]);
+	console.log(posts);
 	return {
 		posts,
+		refreshPosts,
 	};
 }
