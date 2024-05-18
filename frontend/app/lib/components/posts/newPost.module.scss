@@ -5,6 +5,8 @@
 	margin: 0 0 35px 0;
 	h3 {
 		margin: 0 0 10px var(--global-padding);
+		font-weight: normal;
+		font-size: 20px;
 	}
 	button {
 		display: flex;
@@ -18,9 +20,10 @@
 		border: var(--main-gold) 2px solid;
 		cursor: pointer;
 		box-shadow: var(--dark-shadow);
-		transition: 0.3s ease;
+		transition: all 0.15s ease;
 		&:hover {
-			transform: translateY(-1px);
+			color: var(--main-purple);
+			border-color: var(--main-purple);
 		}
 	}
 }
@@ -30,12 +33,14 @@
 	height: 80px;
 	font-size: 15px;
 	padding: 15px;
-	background-color: var(--main-gold);
+	background-color: var(--main-dark);
 	color: var(--main-light);
 	border-radius: var(--border-radius);
 	box-shadow: var(--dark-shadow);
+	border: var(--main-gold) solid 2px;
+	transition: 0.15s border-color ease;
 	&:focus {
-		border: none;
+		border-color: var(--main-purple);
 		outline: none;
 	}
 }
@@ -48,15 +53,17 @@
 	margin: 0 0 15px 0;
 	input {
 		padding: 10px;
-		background: var(--main-gold);
+		background: var(--main-dark);
 		border-radius: var(--border-radius);
 		border: none;
 		color: var(--main-light);
 		font-size: 16px;
 		box-shadow: var(--dark-shadow);
+		border: var(--main-gold) solid 2px;
+		transition: 0.15s border-color ease;
 		&:focus {
-			border: none;
 			outline: none;
+			border-color: var(--main-purple);
 		}
 	}
 	label {
