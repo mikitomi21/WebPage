@@ -1,43 +1,21 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import PostsList from './lib/components/posts/PostsList';
-import { Post } from './lib/types/types';
-import useFetch from './lib/hooks/useFetch';
 import secureLocalStorage from 'react-secure-storage';
-import { User } from './lib/types/types';
+import usePosts from './lib/hooks/usePosts';
+import useUserName from './lib/hooks/useUserName';
+import styles from './page.module.scss';
+import CreatePost from './lib/components/posts/CreatePost';
 export default function Home() {
-	const token = secureLocalStorage.getItem('shareSpaceToken');
-	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
-	const [userName, setUserName] = useState('');
+	const token = secureLocalStorage.getItem('shareSpaceToken') as string;
 	const router = useRouter();
 
 	if (!token) {
 		router.push('/login');
 	}
-
-	useEffect(() => {
-		const getPosts = async () => {
-			const { response, status } = await useFetch('/posts/', 'GET', {
-				Authorization: `Token ${token}`,
-			});
-			const res = response.json();
-			res.then((postsFromDB) => setPosts(postsFromDB));
-		};
-		const getUserName = async () => {
-			const { response, status } = await useFetch('/users/me/', 'GET', {
-				Authorization: `Token ${token}`,
-			});
-			if (status == 200) {
-				const userInfoResponse: User = await response.json();
-				setUserName(userInfoResponse.username);
-			}
-		};
-		getPosts();
-		getUserName();
-	}, []);
-
-	if (!posts)
+	const { posts, refreshPosts } = usePosts(token);
+	const { userName } = useUserName(token);
+	if (!posts || !userName)
 		return (
 			<div className='loader' style={{ color: 'white' }}>
 				Ładowanie...
@@ -45,8 +23,14 @@ export default function Home() {
 		);
 
 	return (
-		<>
+		<main className={styles.main}>
+			<h2 className={styles.main_hello}>Witaj, {userName}</h2>
+			<CreatePost
+				userName={userName}
+				token={token}
+				refreshPosts={refreshPosts}
+			/>
 			<PostsList posts={posts} userName={userName} />
-		</>
+		</main>
 	);
 }

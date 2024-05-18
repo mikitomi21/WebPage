@@ -4,6 +4,7 @@ export type Post = {
 	comments: Comment[];
 	title: string;
 	text: string;
+	author: Author;
 };
 export type Author = {
 	username: string;
