@@ -5,7 +5,7 @@ import styles from './comment.module.scss';
 type CommentProps = {
 	comment: Comment;
 };
-export default function Comment({ comment }: CommentProps) {
+export default function SingleComment({ comment }: CommentProps) {
 	return (
 		<div className={styles.comment}>
 			<div className={styles.comment_user}>
@@ -16,7 +16,9 @@ export default function Comment({ comment }: CommentProps) {
 					width={30}
 					height={30}
 				/>
-				<div className={styles.comment_username}>@{comment.author.username}</div>
+				<div className={styles.comment_username}>
+					@{comment.author.username}
+				</div>
 			</div>
 			<div className={styles.comment_text}>{comment.text}</div>
 			<div className={styles.comment_likes}>

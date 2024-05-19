@@ -7,6 +7,7 @@ import Comment from './Comment';
 import styles from './post.module.scss';
 import { useNewComment } from '../../hooks/useNewComment';
 import useGlobalContext from '../../hooks/useGlobalContext';
+import { addPostLike } from '../../actions/actions';
 
 type PostProps = {
 	post: Post;
@@ -30,9 +31,19 @@ export default function SinglePost({ post, refreshPosts }: PostProps) {
 			<h2 className={styles.post_title}>{post.title}</h2>
 			<p className={styles.post_text}>{post.text}</p>
 			<div className={styles.post_stats}>
-				<div className={styles.post_stats_likes}>
-					{post.likes.length} <FaHeart />
-				</div>
+				<form
+					action={(formData) => {
+						addPostLike(formData);
+						refreshPosts();
+					}}
+					className={styles.post_stats_likes}
+				>
+					<input type='hidden' name='token' value={token} />
+					<input type='hidden' name='postId' value={post.id} />
+					<button type='submit'>
+						{post.likes.length} <FaHeart />
+					</button>
+				</form>
 				<div className={styles.post_stats_comments}>
 					{post.comments.length} <FaComments />
 				</div>
@@ -40,7 +51,7 @@ export default function SinglePost({ post, refreshPosts }: PostProps) {
 			<form onSubmit={handleSubmit} className={styles.post_create_comment}>
 				<input type='hidden' name='token' value={token} />
 				<input type='hidden' name='userName' value={userName} />
-				<input type='hidden' name='newCommentId' value={post.id} />
+				<input type='hidden' name='postId' value={post.id} />
 				<div className={styles.textarea_container}>
 					<textarea
 						name={`newComment_${post.id}`}

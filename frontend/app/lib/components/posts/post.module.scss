@@ -92,6 +92,17 @@
 			svg {
 				font-size: 1.3rem !important;
 			}
+			button {
+				background: none;
+				border: none;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 4px;
+				font-size: 1.3rem;
+				color: var(--main-light);
+				cursor: pointer;
+			}
 		}
 		&_comments {
 			svg {

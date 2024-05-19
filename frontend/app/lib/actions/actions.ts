@@ -43,17 +43,15 @@ export async function createNewPost(prevState: State, formData: FormData) {
 }
 
 export async function createNewComment(prevState: State, formData: FormData) {
-	const newCommentId = formData.get('newCommentId')?.toString();
-	const newCommentText = formData
-		.get(`newComment_${newCommentId}`)
-		?.toString();
+	const postId = formData.get('postId')?.toString();
+	const newCommentText = formData.get(`newComment_${postId}`)?.toString();
 	const newCommentUserName = formData.get('userName')?.toString();
 	const token = formData.get('token')?.toString();
 	const comment = {
 		author: {
 			username: newCommentUserName,
 		},
-		post: newCommentId,
+		post: postId,
 		text: newCommentText,
 		likes: [1],
 	};
@@ -67,7 +65,6 @@ export async function createNewComment(prevState: State, formData: FormData) {
 		},
 		comment
 	);
-	console.log(newCommentResponse);
 	if (status === 201) {
 		revalidatePath('/');
 		return {
@@ -78,4 +75,15 @@ export async function createNewComment(prevState: State, formData: FormData) {
 			message: 'Wystąpił błąd podczas dodawania komentarza.',
 		};
 	}
+}
+export async function addPostLike(formData: FormData) {
+	const postId = formData.get('postId')?.toString();
+	const token = formData.get('token')?.toString();
+	const { response: newCommentResponse, status } = await useFetch(
+		`/posts/${postId}/add_like/`,
+		'POST',
+		{
+			Authorization: `Token ${token}`,
+		}
+	);
 }
