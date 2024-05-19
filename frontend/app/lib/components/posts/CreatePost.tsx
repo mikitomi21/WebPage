@@ -1,8 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
 import styles from './newPost.module.scss';
-import { createNewPost } from '../../actions/actions';
 import { useNewPost } from '../../hooks/useNewPost';
 
 type CreatePostProps = {

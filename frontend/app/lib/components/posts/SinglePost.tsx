@@ -1,14 +1,26 @@
+'use client';
 import { Post } from '../../types/types';
 import Image from 'next/image';
 import { FaHeart } from 'react-icons/fa';
 import { FaComments } from 'react-icons/fa';
 import Comment from './Comment';
 import styles from './post.module.scss';
+import { useNewComment } from '../../hooks/useNewComment';
 
 type PostProps = {
 	post: Post;
+	userName: string;
+	token: string;
+	refreshPosts: () => void;
 };
-export default function SinglePost({ post }: PostProps) {
+export default function SinglePost({
+	post,
+	userName,
+	token,
+	refreshPosts,
+}: PostProps) {
+	const { message, handleSubmit } = useNewComment({ refreshPosts });
+
 	return (
 		<div className={styles.post}>
 			<div className={styles.user}>
@@ -31,15 +43,18 @@ export default function SinglePost({ post }: PostProps) {
 					{post.comments.length} <FaComments />
 				</div>
 			</div>
-			<form action='' className={styles.post_create_comment}>
+			<form onSubmit={handleSubmit} className={styles.post_create_comment}>
+				<input type='hidden' name='token' value={token} />
+				<input type='hidden' name='userName' value={userName} />
+				<input type='hidden' name='newCommentId' value={post.id} />
 				<div className={styles.textarea_container}>
 					<textarea
-						name={`new_comment_${post.id}`}
-						id={`new_comment_${post.id}`}
+						name={`newComment_${post.id}`}
+						id={`newComment_${post.id}`}
 					></textarea>
 				</div>
-
 				<button type='submit'>Skomentuj</button>
+				<p className={styles.message}>{message}</p>
 			</form>
 			<div className={styles.post_comments}>
 				{post.comments.map((comment, index) => {

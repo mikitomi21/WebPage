@@ -30,7 +30,12 @@ export default function Home() {
 				token={token}
 				refreshPosts={refreshPosts}
 			/>
-			<PostsList posts={posts} userName={userName} />
+			<PostsList
+				posts={posts}
+				userName={userName}
+				token={token}
+				refreshPosts={refreshPosts}
+			/>
 		</main>
 	);
 }
