@@ -21,7 +21,7 @@ export default function SinglePost({ post }: PostProps) {
 				/>
 				<h3 className={styles.user_name}>@{post.author.username}</h3>
 			</div>
-			<h2 className={styles.post_title}>"{post.title}"</h2>
+			<h2 className={styles.post_title}>{post.title}</h2>
 			<p className={styles.post_text}>{post.text}</p>
 			<div className={styles.post_stats}>
 				<div className={styles.post_stats_likes}>
@@ -31,6 +31,16 @@ export default function SinglePost({ post }: PostProps) {
 					{post.comments.length} <FaComments />
 				</div>
 			</div>
+			<form action='' className={styles.post_create_comment}>
+				<div className={styles.textarea_container}>
+					<textarea
+						name={`new_comment_${post.id}`}
+						id={`new_comment_${post.id}`}
+					></textarea>
+				</div>
+
+				<button type='submit'>Skomentuj</button>
+			</form>
 			<div className={styles.post_comments}>
 				{post.comments.map((comment, index) => {
 					return <Comment comment={comment} key={index} />;

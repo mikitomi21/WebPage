@@ -12,7 +12,7 @@
 	&_title {
 		position: relative;
 		display: inline-block;
-		font-weight: normal;
+		font-weight: 600;
 		font-size: 1.3rem;
 		padding: 10px 0 10px 0;
 		&:after {
@@ -30,6 +30,53 @@
 		padding: 10px 0 0 0;
 		font-size: 0.9rem;
 	}
+	&_create_comment {
+		display: flex;
+		flex-direction: column;
+		padding: 25px 0 0 0;
+		.textarea_container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 17px;
+			gap: 20px;
+			textarea {
+				resize: none;
+				font-size: 15px;
+				padding: 15px;
+				width: 50%;
+				background-color: var(--main-dark);
+				color: var(--main-light);
+				border-radius: var(--border-radius);
+				box-shadow: var(--dark-shadow);
+				border: var(--main-gold) solid 2px;
+				transition: 0.15s border-color ease;
+				&:focus {
+					border-color: var(--main-purple);
+					outline: none;
+				}
+			}
+		}
+		button {
+			display: flex;
+			border: none;
+			padding: 10px 14px;
+			margin: 15px auto 0 auto;
+			font-size: 16px;
+			border-radius: (var(--border-radius));
+			background: var(--main-dark);
+			color: var(--main-gold);
+			border: var(--main-gold) 2px solid;
+			cursor: pointer;
+			box-shadow: var(--dark-shadow);
+			transition: all 0.15s ease;
+			&:hover {
+				color: var(--main-purple);
+				border-color: var(--main-purple);
+			}
+		}
+	}
+
 	&_stats {
 		display: flex;
 		justify-content: space-evenly;
@@ -73,7 +120,6 @@
 		margin: 0 0 0 15px;
 	}
 }
-
 
 @media (min-width: 1080px) {
 	.post {
