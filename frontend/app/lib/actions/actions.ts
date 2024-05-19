@@ -41,3 +41,50 @@ export async function createNewPost(prevState: State, formData: FormData) {
 		};
 	}
 }
+
+export async function createNewComment(prevState: State, formData: FormData) {
+	const postId = formData.get('postId')?.toString();
+	const newCommentText = formData.get(`newComment_${postId}`)?.toString();
+	const newCommentUserName = formData.get('userName')?.toString();
+	const token = formData.get('token')?.toString();
+	const comment = {
+		author: {
+			username: newCommentUserName,
+		},
+		post: postId,
+		text: newCommentText,
+		likes: [1],
+	};
+	console.log(comment);
+	const { response: newCommentResponse, status } = await useFetch(
+		`/comments/`,
+		'POST',
+		{
+			'Content-Type': 'application/json',
+			Authorization: `Token ${token}`,
+		},
+		comment
+	);
+	if (status === 201) {
+		revalidatePath('/');
+		return {
+			message: 'Komentarz został dodany!',
+		};
+	} else {
+		return {
+			message: 'Wystąpił błąd podczas dodawania komentarza.',
+		};
+	}
+}
+export async function addPostLike(formData: FormData) {
+	const postId = formData.get('postId')?.toString();
+	const token = formData.get('token')?.toString();
+	const { response: newCommentResponse, status } = await useFetch(
+		`/posts/${postId}/add_like/`,
+		'POST',
+		{
+			Authorization: `Token ${token}`,
+		}
+	);
+}
+

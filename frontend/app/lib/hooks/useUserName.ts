@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
 import useFetch from './useFetch';
 import { Post, User } from '../types/types';
+import useGlobalContext from './useGlobalContext';
 
 type useUserNameProps = string;
-type useUserNameReturn = {
-	userName: string | undefined;
-};
-export default function useUserName(
-	token: useUserNameProps
-): useUserNameReturn {
-	const [userName, setUserName] = useState('');
+
+export default function useUserName(token: useUserNameProps) {
+	const { setUserName } = useGlobalContext();
 	useEffect(() => {
 		const getUserName = async () => {
 			const { response, status } = await useFetch('/users/me/', 'GET', {
@@ -22,7 +19,4 @@ export default function useUserName(
 		};
 		getUserName();
 	}, []);
-	return {
-		userName,
-	};
 }

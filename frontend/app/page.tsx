@@ -6,6 +6,7 @@ import usePosts from './lib/hooks/usePosts';
 import useUserName from './lib/hooks/useUserName';
 import styles from './page.module.scss';
 import CreatePost from './lib/components/posts/CreatePost';
+import useGlobalContext from './lib/hooks/useGlobalContext';
 export default function Home() {
 	const token = secureLocalStorage.getItem('shareSpaceToken') as string;
 	const router = useRouter();
@@ -13,8 +14,12 @@ export default function Home() {
 	if (!token) {
 		router.push('/login');
 	}
-	const { posts, refreshPosts } = usePosts(token);
-	const { userName } = useUserName(token);
+
+	const { refreshPosts } = usePosts(token);
+	useUserName(token);
+	const { posts, userName, setToken } = useGlobalContext();
+	setToken(token);
+
 	if (!posts || !userName)
 		return (
 			<div className='loader' style={{ color: 'white' }}>
@@ -25,12 +30,8 @@ export default function Home() {
 	return (
 		<main className={styles.main}>
 			<h2 className={styles.main_hello}>Witaj, {userName}</h2>
-			<CreatePost
-				userName={userName}
-				token={token}
-				refreshPosts={refreshPosts}
-			/>
-			<PostsList posts={posts} userName={userName} />
+			<CreatePost refreshPosts={refreshPosts} />
+			<PostsList posts={posts} refreshPosts={refreshPosts} />
 		</main>
 	);
 }
