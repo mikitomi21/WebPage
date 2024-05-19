@@ -6,21 +6,15 @@ import { FaComments } from 'react-icons/fa';
 import Comment from './Comment';
 import styles from './post.module.scss';
 import { useNewComment } from '../../hooks/useNewComment';
+import useGlobalContext from '../../hooks/useGlobalContext';
 
 type PostProps = {
 	post: Post;
-	userName: string;
-	token: string;
 	refreshPosts: () => void;
 };
-export default function SinglePost({
-	post,
-	userName,
-	token,
-	refreshPosts,
-}: PostProps) {
+export default function SinglePost({ post, refreshPosts }: PostProps) {
 	const { message, handleSubmit } = useNewComment({ refreshPosts });
-
+	const { userName, token } = useGlobalContext();
 	return (
 		<div className={styles.post}>
 			<div className={styles.user}>

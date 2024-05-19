@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import useFetch from './useFetch';
 import { Post } from '../types/types';
+import useGlobalContext from './useGlobalContext';
 
 type usePostsReturn = {
-	posts: Post[] | undefined;
 	refreshPosts: () => void;
 };
 
 export default function usePosts(token: string): usePostsReturn {
-	const [posts, setPosts] = useState<Post[] | undefined>(undefined);
+	const { setPosts } = useGlobalContext();
 	const [refresh, setRefresh] = useState(false);
 
 	const refreshPosts = () => {
@@ -29,9 +29,7 @@ export default function usePosts(token: string): usePostsReturn {
 
 		getPosts();
 	}, [token, refresh]);
-	console.log(posts);
 	return {
-		posts,
 		refreshPosts,
 	};
 }

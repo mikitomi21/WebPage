@@ -2,20 +2,17 @@
 
 import styles from './newPost.module.scss';
 import { useNewPost } from '../../hooks/useNewPost';
+import useGlobalContext from '../../hooks/useGlobalContext';
 
 type CreatePostProps = {
-	userName: string;
-	token: string;
 	refreshPosts: () => void;
 };
 
 export default function CreatePost({
-	userName,
-	token,
 	refreshPosts,
 }: CreatePostProps) {
 	const { message, handleSubmit } = useNewPost({ refreshPosts });
-
+	const {userName, token} = useGlobalContext()
 	return (
 		<section className={styles.create_post}>
 			<h3>Co chodzi Ci po głowie?</h3>
