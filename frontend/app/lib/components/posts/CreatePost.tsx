@@ -13,6 +13,7 @@ export default function CreatePost({
 }: CreatePostProps) {
 	const { message, handleSubmit } = useNewPost({ refreshPosts });
 	const {userName, token} = useGlobalContext()
+
 	return (
 		<section className={styles.create_post}>
 			<h3>Co chodzi Ci po głowie?</h3>

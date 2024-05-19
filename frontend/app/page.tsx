@@ -19,6 +19,7 @@ export default function Home() {
 	useUserName(token);
 	const { posts, userName, setToken } = useGlobalContext();
 	setToken(token);
+
 	if (!posts || !userName)
 		return (
 			<div className='loader' style={{ color: 'white' }}>
